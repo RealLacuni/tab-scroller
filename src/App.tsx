@@ -1,11 +1,15 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import AppBar from './AppBar';
+import Header from './Components/Header';
+import PDFContent from './Components/PDFContent';
 
 const App = () => {
   return (
-    <div>
+      <div className='flex flex-col h-screen'>
       <AppBar />
-    </div>
-  )
-}
+      <Header />
+      <PDFContent />
+      </div>
+  );
+};
 export default App;
