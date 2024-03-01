@@ -8,18 +8,18 @@ declare global {
 }
 
 const api = {
-  /**
-   * Here you can expose functions to the renderer process
-   * so they can interact with the main (electron) side
-   * without security problems.
-   *
-   * The function below can accessed using `window.Main.sayHello`
-   */
-  sendMessage: (message: string) => {
-    ipcRenderer.send('message', message);
+  addFile: (fString : string) => {
+    ipcRenderer.send('add-file', fString);
+  },
+
+  // takes a callback function that will be called  with the files array when the main process invokes the ipc, performs some action
+  onReceivingFiles: (callback: (files: string[]) => void) => {
+    ipcRenderer.on('open-files', (_, files: string[]) => {
+      callback(files);
+    });
   },
   /**
-    Here function for AppBar
+    Appbar utility functions
    */
   Minimize: () => {
     ipcRenderer.send('minimize');

@@ -1,18 +1,15 @@
-import React, { useState } from 'react';
+import React from 'react';
 // import + from heroicon
 import { PlusIcon } from '@heroicons/react/20/solid';
 
 const FileInputComponent = () => {
-  const [file, setFile] = useState<File | null>(null);
-  const path = file?.path;
-  console.log(path);
 
   const handleClick = () => {
     document.getElementById('file-input')?.click();
   };
   return (
     <div className="w-48 relative">
-      <PlusIcon className="w-8 h-8 absolute top-1 cursor-pointer" onClick={handleClick} />
+      <PlusIcon className="w-8 h-8 top-1 cursor-pointer text-black bg-pink-200" onClick={handleClick} />
       <input
         id="file-input"
         aria-label="file-input"
@@ -22,7 +19,9 @@ const FileInputComponent = () => {
         onChange={(e) => {
           const selectedFile = e.target.files?.[0];
           if (selectedFile) {
-            setFile(selectedFile);
+            console.log('sending file');
+            
+            window.Main.addFile(JSON.stringify(selectedFile));
           }
         }}
       />

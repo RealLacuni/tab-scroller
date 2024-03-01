@@ -7,6 +7,8 @@ import isDev from 'electron-is-dev';
 
 const height = 600;
 const width = 800;
+//  file path handling here
+const openFiles: string[] = [];
 
 function createWindow() {
   // Create the browser window.
@@ -34,6 +36,15 @@ function createWindow() {
   }
   // Open the DevTools.
   // window.webContents.openDevTools();
+
+
+  ipcMain.on('add-file', (_, file : string) => {
+    if (file === null) {
+      return;
+    }
+    openFiles.push(file);
+    window.webContents.send('open-files', openFiles);
+  });
 
   // For AppBar
   ipcMain.on('minimize', () => {
