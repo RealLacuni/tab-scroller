@@ -5,7 +5,7 @@ import MainContent from './Components/MainContent';
 
 const App = () => {
   return (
-      <div className='flex flex-col h-screen'>
+      <div className='flex flex-col h-screen text-white'>
       <AppBar />
       <Header />
       <MainContent />
