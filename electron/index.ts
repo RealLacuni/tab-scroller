@@ -4,6 +4,10 @@ import { join } from 'path';
 // Packages
 import { BrowserWindow, app, ipcMain } from 'electron';
 import isDev from 'electron-is-dev';
+import { updateElectronApp } from 'update-electron-app';
+
+updateElectronApp({
+});
 
 const height = 600;
 const width = 800;
