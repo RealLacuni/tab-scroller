@@ -18,6 +18,7 @@ export default ({ command }: ConfigEnv): UserConfig => {
       },
       build: {
         outDir: join(srcRoot, '/out'),
+        target: 'esnext',
         emptyOutDir: true,
         rollupOptions: {}
       },

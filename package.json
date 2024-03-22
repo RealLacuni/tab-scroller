@@ -38,7 +38,6 @@
     "@heroicons/react": "^2.1.1",
     "@mantine/core": "^7.6.1",
     "@mantine/hooks": "^7.6.1",
-    "@types/pdfjs-dist": "^2.10.378",
     "@vitejs/plugin-react": "^1.2.0",
     "electron-is-dev": "^2.0.0",
     "pdf.js": "^0.1.0",
@@ -51,7 +50,8 @@
     "yarn": "^1.22.21"
   },
   "devDependencies": {
-    "@types/node": "^17.0.22",
+    "@types/node": "^17.0.45",
+    "@types/pdfjs-dist": "^2.10.378",
     "@types/react": "^17.0.41",
     "@types/react-dom": "^17.0.14",
     "@typescript-eslint/eslint-plugin": "7.0.2",

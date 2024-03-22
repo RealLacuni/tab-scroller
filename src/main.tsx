@@ -1,16 +1,17 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import { MantineProvider } from '@mantine/core';
 import '@mantine/core/styles.css';
 
+// use create root instead
+import { createRoot } from 'react-dom/client';
 
-ReactDOM.render(
-  <React.StrictMode>
+const rootElement = document.getElementById('root');
+if (rootElement) {
+  createRoot(rootElement).render(
     <MantineProvider>
-    <App /> 
+      <App />
     </MantineProvider>
-  </React.StrictMode>,
-  document.getElementById('root')
-);
+  );
+}
