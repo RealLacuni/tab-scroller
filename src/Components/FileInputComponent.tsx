@@ -2,7 +2,10 @@ import React from 'react';
 // import + from heroicon
 import { PlusIcon } from '@heroicons/react/20/solid';
 
-const FileInputComponent = () => {
+type FileInputComponentProps = {
+  setFile : (file: File) => void
+}
+const FileInputComponent = ({setFile} : FileInputComponentProps) => {
 
   const handleClick = () => {
     document.getElementById('file-input')?.click();
@@ -20,7 +23,7 @@ const FileInputComponent = () => {
           const selectedFile = e.target.files?.[0];
           if (selectedFile) {
             console.log('sending file');
-            
+            setFile(selectedFile);
             window.Main.addFile(JSON.stringify(selectedFile));
           }
         }}

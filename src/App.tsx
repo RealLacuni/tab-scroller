@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import AppBar from './AppBar';
 import Toolbar from './Components/Toolbar';
 import PDFWindow from './Components/PDFWindow';
@@ -14,13 +14,13 @@ const FilesCallback = (files : string[]) => {
 
 window.Main.onReceivingFiles(FilesCallback);
 const App = () => {
-  const [currentFilePath, setCurrentFilePath] = React.useState('');
+  const [file, setFile] = useState(null as File | null);
 
   return (
-      <div className='flex flex-col h-screen bg-slate-50'>
+      <div className='flex flex-col h-screen bg-slate-50 pt-8'>
       <AppBar />
-      <Toolbar openFiles={openFiles} setFilePath = {setCurrentFilePath}/>
-      <PDFWindow filePath={currentFilePath}/>
+      <Toolbar openFiles={openFiles} setFile = {setFile}/>
+      <PDFWindow file={file}/>
       </div>
   );
 };
