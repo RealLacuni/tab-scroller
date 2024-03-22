@@ -1,5 +1,7 @@
 import React from 'react'
 import { pdfjs, Document, Page } from 'react-pdf';
+import 'react-pdf/dist/Page/TextLayer.css';
+import 'react-pdf/dist/esm/Page/AnnotationLayer.css';
 
 // pdfjs.GlobalWorkerOptions.workerSrc = new URL(
 //   'pdfjs-dist/build/pdf.worker.min.js',
@@ -7,7 +9,11 @@ import { pdfjs, Document, Page } from 'react-pdf';
 // ).toString();
 
 pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
-
+const options = {
+  cMapUrl: 'cmaps/',
+  cMapPacked: true,
+};
+}
 type PDFWindowProps = {
   file: File | null
 }
@@ -37,6 +43,7 @@ const PDFWindow = ({file}: PDFWindowProps) => {
       <Document
         file={file}
         onLoadSuccess={extractFileInfo}
+        options={options}
       >
         {Array.from(new Array(numPages), (el, index) => (
           <Page
