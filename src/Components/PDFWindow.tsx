@@ -13,7 +13,7 @@ const options = {
   cMapUrl: 'cmaps/',
   cMapPacked: true,
 };
-}
+
 type PDFWindowProps = {
   file: File | null
 }
