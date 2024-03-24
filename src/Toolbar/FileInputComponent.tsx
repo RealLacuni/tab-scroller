@@ -1,6 +1,5 @@
 import React from 'react';
-// import + from heroicon
-import { PlusIcon } from '@heroicons/react/20/solid';
+import { FolderOpenIcon } from '@heroicons/react/24/outline';
 
 type FileInputComponentProps = {
   setFile : (file: File) => void
@@ -11,8 +10,8 @@ const FileInputComponent = ({setFile} : FileInputComponentProps) => {
     document.getElementById('file-input')?.click();
   };
   return (
-    <div className="w-48 relative">
-      <PlusIcon className="w-8 h-8 top-1 cursor-pointer text-black bg-pink-200" onClick={handleClick} />
+    <div className="">
+      <FolderOpenIcon className="w-8 h-8 cursor-pointer text-slate-600 bg-slate-300 rounded-sm p-0.5  hover:text-white" onClick={handleClick} />
       <input
         id="file-input"
         aria-label="file-input"
