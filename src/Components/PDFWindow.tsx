@@ -17,6 +17,7 @@ const PDFWindow = ({file}: PDFWindowProps) => {
   //TODO: pdf render, load state, error state
   const [numPages, setNumPages] = React.useState(0);
   
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const extractFileInfo = (pdf: any) => {
     console.log('setting num pages to', pdf._pdfInfo.numPages);
     setNumPages(pdf._pdfInfo.numPages);
