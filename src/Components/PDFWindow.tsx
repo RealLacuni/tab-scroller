@@ -9,10 +9,6 @@ import 'react-pdf/dist/esm/Page/AnnotationLayer.css';
 // ).toString();
 
 pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
-const options = {
-  cMapUrl: 'cmaps/',
-  cMapPacked: true,
-};
 
 type PDFWindowProps = {
   file: File | null
@@ -20,16 +16,13 @@ type PDFWindowProps = {
 const PDFWindow = ({file}: PDFWindowProps) => {
   //TODO: pdf render, load state, error state
   const [numPages, setNumPages] = React.useState(0);
-  const [isLoaded, setIsLoaded] = React.useState(false);
-  const extractFileInfo = (pdf: any) => {
-    setNumPages(pdf._pdfInfo.numPages);
-    setIsLoaded(true);
-    console.log();
   
+  const extractFileInfo = (pdf: any) => {
+    console.log('setting num pages to', pdf._pdfInfo.numPages);
+    setNumPages(pdf._pdfInfo.numPages);
   }
-
-  console.log(file);
-  if (!file || !isLoaded) {
+  
+  if (!file) {
     return (
       <div className='flex flex-col flex-1 bg-slate-50 '>
         <div className='flex items-center justify-center flex-1'>
@@ -38,17 +31,21 @@ const PDFWindow = ({file}: PDFWindowProps) => {
       </div>
     )
   }
+
   return (
-    <div className='flex flex-col flex-1 bg-slate-50 overflow-y-auto'>
+    <div className='flex flex-col flex-1 overflow-y-auto'>
       <Document
         file={file}
         onLoadSuccess={extractFileInfo}
-        options={options}
+        // styling for 2-page layout like in Adobe Reader or Word, without overlapping pages
+        className={'grid grid-cols-2 gap-4'}
       >
         {Array.from(new Array(numPages), (el, index) => (
           <Page
             key={`page_${index + 1}`}
             pageNumber={index + 1}
+            scale={1}
+            width={800}
           />
         ))}
       </Document>

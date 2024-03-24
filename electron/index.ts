@@ -21,7 +21,7 @@ function createWindow() {
     height,
     //  change to false to use AppBar
     frame: false,
-    show: true,
+    show: false,
     resizable: true,
     fullscreenable: true,
     webPreferences: {
@@ -63,6 +63,10 @@ function createWindow() {
 
   ipcMain.on('close', () => {
     window.close();
+  });
+
+  window.once('ready-to-show', () => {
+    window.show();
   });
 }
 
