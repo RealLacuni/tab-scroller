@@ -1,4 +1,5 @@
 import { ipcRenderer, contextBridge } from 'electron';
+import { Settings } from '../shared/types';
 
 declare global {
   interface Window {
@@ -10,6 +11,18 @@ declare global {
 const api = {
   addFile: (fString : string) => {
     ipcRenderer.send('add-file', fString);
+  },
+  PrintInBackend: (message: string) => {
+    return ipcRenderer.send('printInBackend', message);
+  },
+  UpdateSettings: (preferences: Settings) => {
+    return ipcRenderer.sendSync('updateSettings', preferences);
+  },
+  GetSettings: () => {
+    return ipcRenderer.sendSync('getSettings');
+  },
+  onUpdatedSettings: (callback: (settings: Settings) => void) => {
+    ipcRenderer.on('updatedSettings', (_, settings) => callback(settings));
   },
 
   // takes a callback function that will be called  with the files array when the main process invokes the ipc, performs some action
