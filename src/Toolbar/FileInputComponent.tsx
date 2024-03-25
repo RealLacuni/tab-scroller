@@ -1,10 +1,10 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { FolderOpenIcon } from '@heroicons/react/24/outline';
+import { FilesContext } from '../FilesContext';
 
-type FileInputComponentProps = {
-  setFile : (file: File) => void
-}
-const FileInputComponent = ({setFile} : FileInputComponentProps) => {
+
+const FileInputComponent = () => {
+  const setFile = useContext(FilesContext).setFile;
 
   const handleClick = () => {
     document.getElementById('file-input')?.click();

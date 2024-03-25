@@ -1,7 +1,8 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { pdfjs, Document, Page } from 'react-pdf';
 import 'react-pdf/dist/Page/TextLayer.css';
 import 'react-pdf/dist/esm/Page/AnnotationLayer.css';
+import { FilesContext } from '../FilesContext';
 
 // pdfjs.GlobalWorkerOptions.workerSrc = new URL(
 //   'pdfjs-dist/build/pdf.worker.min.js',
@@ -10,12 +11,10 @@ import 'react-pdf/dist/esm/Page/AnnotationLayer.css';
 
 pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
 
-type PDFWindowProps = {
-  file: File | null
-}
-const PDFWindow = ({file}: PDFWindowProps) => {
+const PDFWindow = () => {
   //TODO: pdf render, load state, error state
   const [numPages, setNumPages] = React.useState(0);
+  const file = useContext(FilesContext).currentFile;
   
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const extractFileInfo = (pdf: any) => {
