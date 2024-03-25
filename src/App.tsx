@@ -7,7 +7,7 @@ const App = () => {
 
 
   return (
-      <div className='flex flex-col h-screen bg-slate-50 pt-7'>
+      <div className='flex flex-col h-screen bg-slate-50 pt-6'>
       <AppBar />
       <Toolbar />
       <PDFWindow />

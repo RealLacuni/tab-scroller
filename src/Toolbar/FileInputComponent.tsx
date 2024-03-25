@@ -4,14 +4,17 @@ import { FilesContext } from '../FilesContext';
 
 
 const FileInputComponent = () => {
-  const setFile = useContext(FilesContext).setFile;
+  const files = useContext(FilesContext).openFiles;
+  const currentFile = useContext(FilesContext).currentFile;
+  const setCurrentFile = useContext(FilesContext).setCurrentFile;
+  const setFiles = useContext(FilesContext).setFiles;
 
   const handleClick = () => {
     document.getElementById('file-input')?.click();
   };
   return (
-    <div className="">
-      <FolderOpenIcon className="w-8 h-8 cursor-pointer text-slate-600 bg-slate-300 rounded-sm p-0.5  hover:text-white" onClick={handleClick} />
+    <div className="w-8">
+      <FolderOpenIcon className="w-8 h-8 cursor-pointer border border-slate-400 text-slate-600 bg-slate-300 rounded-sm p-0.5  hover:text-white" onClick={handleClick} />
       <input
         id="file-input"
         aria-label="file-input"
@@ -21,8 +24,11 @@ const FileInputComponent = () => {
         onChange={(e) => {
           const selectedFile = e.target.files?.[0];
           if (selectedFile) {
-            console.log('sending file');
-            setFile(selectedFile);
+            files.push(selectedFile);
+            if (!currentFile) setCurrentFile(selectedFile);
+            setFiles(files);
+            console.log(files);
+            
             window.Main.addFile(JSON.stringify(selectedFile));
           }
         }}

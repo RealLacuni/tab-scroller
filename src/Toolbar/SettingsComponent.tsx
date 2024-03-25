@@ -9,7 +9,7 @@ const SettingsComponent = () => {
       };
       return (
         <div className="">
-          <AdjustmentsHorizontalIcon className="w-8 h-8 cursor-pointer text-slate-600 bg-slate-300 rounded-sm p-0.5 hover:text-white" onClick={handleClick} />
+          <AdjustmentsHorizontalIcon className="w-8 h-8 border border-slate-400 cursor-pointer text-slate-600 bg-slate-300 rounded-sm p-0.5 hover:text-white" onClick={handleClick} />
         </div>
       );
 }

@@ -5,10 +5,10 @@ import TabList from './TabList';
 
 const Toolbar = () => {
   return (
-    <div className="grid grid-cols-12 bg-slate-200 border-b border-slate-800 py-0.5">
-      <div className="flex flex-row items-start col-start-1 gap-1">
-        <FileInputComponent/>
+    <div className="flex flex-row bg-slate-200 border-b border-slate-800 gap-4 pt-2">
+      <div className="flex flex-row items-start col-start-1 gap-2 pb-0.5 w-20">
         <SettingsComponent />
+        <FileInputComponent />
       </div>
       <TabList />
     </div>

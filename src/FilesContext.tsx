@@ -5,14 +5,14 @@ type FilesContextType = {
     openFiles: File[],
     currentFile: File | null,
     setCurrentFile: (file: File) => void
-    setFile: (file: File) => void
+    setFiles: (files: File[]) => void
 }
 
 const initialValues = {
     openFiles: [],
     currentFile: null,
     setCurrentFile: () => {},
-    setFile: () => {}
+    setFiles: () => {}
   } as FilesContextType;
 
 const FilesContext = createContext<FilesContextType>(initialValues);
@@ -21,13 +21,12 @@ function FilesContextProvider({children}: {children: React.ReactNode}) {
     const [openFiles, setOpenFiles] = React.useState<File[]>([]);
     const [currentFile, setCurrentFile] = React.useState<File | null>(null);
 
-    const setFile = (file: File) => {
-        setOpenFiles([...openFiles, file]);
-        setCurrentFile(file);
+    const setFiles = (files : File[]) => {
+        setOpenFiles(files);
     }
-
+    
     return (
-        <FilesContext.Provider value={{openFiles, currentFile, setCurrentFile, setFile}}>
+        <FilesContext.Provider value={{openFiles, currentFile, setCurrentFile, setFiles}}>
             {children}
         </FilesContext.Provider>
     )
