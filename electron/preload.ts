@@ -25,12 +25,6 @@ const api = {
     ipcRenderer.on('updatedSettings', (_, settings) => callback(settings));
   },
 
-  // takes a callback function that will be called  with the files array when the main process invokes the ipc, performs some action
-  onReceivingFiles: (callback: (files: string[]) => void) => {
-    ipcRenderer.on('open-files', (_, files: string[]) => {
-      callback(files);
-    });
-  },
   /**
     Appbar utility functions
    */
