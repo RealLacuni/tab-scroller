@@ -6,12 +6,16 @@ import '@mantine/core/styles.css';
 
 // use create root instead
 import { createRoot } from 'react-dom/client';
+import { FilesContextProvider } from './FilesContext';
 
 const rootElement = document.getElementById('root');
 if (rootElement) {
   createRoot(rootElement).render(
     <MantineProvider>
+      <FilesContextProvider>
       <App />
+      </FilesContextProvider>
+
     </MantineProvider>
   );
 }
