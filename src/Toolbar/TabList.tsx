@@ -5,8 +5,8 @@ const TabList = () => {
   const tabs = useContext(FilesContext).openFiles;
   const currentFile = useContext(FilesContext).currentFile;
   const [openIndex, setOpenIndex] = React.useState<number>(currentFile ? tabs.indexOf(currentFile as File) : 0);
-  const setCurrentFile = useContext(FilesContext).setCurrentFile;
-  const setFiles = useContext(FilesContext).setFiles;
+  const updateCurrentFile = useContext(FilesContext).updateCurrentFile;
+  const updateOpenFiles = useContext(FilesContext).updateOpenFiles;
 
   console.log("tablist: ", tabs);
   
@@ -15,26 +15,21 @@ const TabList = () => {
   }
 
   const setActiveTab = (idx: number) => {
-    setCurrentFile(tabs[idx]);
+    updateCurrentFile(tabs[idx]);
     setOpenIndex(idx);
   };
 
-  const closeTab = (e: React.MouseEvent<SVGSVGElement>) => {
-    // get closed tab through event target
-    const tab = e.currentTarget.parentElement;
-    if (!tab) return;
-    const idx = Array.from(tab.parentElement?.children as HTMLCollection).indexOf(tab);
-
-    const newTabs = tabs.filter((_, i) => i !== idx);
-    setFiles(newTabs);
-    if (idx === openIndex) {
-      const nextIndex = Math.max(idx - 1, 0); // Select the next lowest index or 0 if no lower index
-      setActiveTab(nextIndex);
+  const getFileName = (fName : string) => {
+    try {
+      return fName.split('.')[0];
     }
-  };
+    catch {
+      return fName;
+    }
+  }
 
   return (
-    <div className="flex flex-row gap-[0.075rem] ">
+    <div className="flex flex-row gap-[0.075rem] overflow-x-clip">
       {tabs.map((file, idx) => (
         <div
           key={idx}
@@ -45,11 +40,25 @@ const TabList = () => {
           }`}
           onClick={() => setActiveTab(idx)}
         >
-          <p>{file.name.length > 12 ? file.name.slice(0, 24) + '...' : file.name}</p>
+          <p>{file.name.length > 12 ? getFileName(file.name).slice(0, 12) + '...' : getFileName(file.name)}</p>
 
           <XMarkIcon
             className="w-3.5 h-3.5 absolute top-0 right-0 text-slate-900 cursor-pointer hover:text-white"
-            onClick={closeTab}
+            onClick={(e) => {
+              e.stopPropagation();
+              const newTabs = [...tabs];
+              newTabs.splice(idx, 1);
+              updateOpenFiles(newTabs);
+              if (idx === openIndex) {
+                if (newTabs.length > 0) {
+                  updateCurrentFile(newTabs[idx === 0 ? 0 : idx - 1]);
+                } else {
+                  updateCurrentFile(null);
+                }
+              }
+            
+            }
+            }
           />
         </div>
       ))}

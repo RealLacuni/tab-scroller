@@ -6,8 +6,8 @@ import { FilesContext } from '../FilesContext';
 const FileInputComponent = () => {
   const files = useContext(FilesContext).openFiles;
   const currentFile = useContext(FilesContext).currentFile;
-  const setCurrentFile = useContext(FilesContext).setCurrentFile;
-  const setFiles = useContext(FilesContext).setFiles;
+  const updateCurrentFile = useContext(FilesContext).updateCurrentFile;
+  const updateOpenFiles = useContext(FilesContext).updateOpenFiles;
 
   const handleClick = () => {
     document.getElementById('file-input')?.click();
@@ -24,12 +24,9 @@ const FileInputComponent = () => {
         onChange={(e) => {
           const selectedFile = e.target.files?.[0];
           if (selectedFile) {
-            files.push(selectedFile);
-            if (!currentFile) setCurrentFile(selectedFile);
-            setFiles(files);
-            console.log(files);
-            
-            window.Main.addFile(JSON.stringify(selectedFile));
+            if (!currentFile) updateCurrentFile(selectedFile);
+            const newFiles = [...files, selectedFile];
+            updateOpenFiles(newFiles);
           }
         }}
       />

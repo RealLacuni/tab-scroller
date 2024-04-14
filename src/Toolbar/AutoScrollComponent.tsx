@@ -1,8 +1,13 @@
-import React from 'react'
+import React from 'react';
+
 
 const AutoScrollComponent = () => {
+
   return (
-    <div>AutoScrollComponent</div>
+    <>
+        {/* TODO: implement Play, Pause, and Back to Top component buttons*/}
+
+    </>
   )
 }
 
