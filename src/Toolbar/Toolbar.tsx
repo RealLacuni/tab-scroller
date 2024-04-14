@@ -9,6 +9,7 @@ const Toolbar = () => {
       <div className="flex flex-row items-start col-start-1 gap-2 pb-0.5 w-20">
         <SettingsComponent />
         <FileInputComponent />
+        <AutoScrollComponent />
       </div>
       <TabList />
     </div>
