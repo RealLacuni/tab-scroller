@@ -2,7 +2,7 @@
   "name": "tab-scroller",
   "version": "0.0.1",
   "license": "GPL-3.0-only",
-  "main": "main/index.js",
+  "main": "main/electron/index.js",
   "author": {
     "name": "Rene Pazitny",
     "email": "renepazitny@gatech.edu",
