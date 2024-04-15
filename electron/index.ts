@@ -5,6 +5,7 @@ import { join } from 'path';
 import { BrowserWindow, app, ipcMain } from 'electron';
 import isDev from 'electron-is-dev';
 import { updateElectronApp } from 'update-electron-app';
+import { getSettings, updateSettings } from './settings';
 
 updateElectronApp({
 });
@@ -63,6 +64,14 @@ function createWindow() {
 
   ipcMain.on('close', () => {
     window.close();
+  });
+
+  ipcMain.on('getSettings', (event) => {
+    event.returnValue = getSettings();
+  });
+
+  ipcMain.on('updateSettings', (event, settings) => {
+    event.returnValue = updateSettings(settings);
   });
 
   window.once('ready-to-show', () => {

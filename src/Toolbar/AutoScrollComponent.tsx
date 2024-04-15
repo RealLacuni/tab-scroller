@@ -9,7 +9,7 @@ const AutoScrollComponent = () => {
   return (
     <>
       {/* TODO: implement Play, Pause, and Back to Top component buttons*/}
-{isPlaying ?      <PlayIcon className="w-8 h-8 cursor-pointer border border-slate-400 text-slate-600 bg-slate-300 rounded-sm p-0.5  hover:text-white"
+{!isPlaying ?      <PlayIcon className="w-8 h-8 cursor-pointer border border-slate-400 text-slate-600 bg-slate-300 rounded-sm p-0.5  hover:text-white"
       onClick={playFunction}/> : 
       <PauseIcon className="w-8 h-8 cursor-pointer border border-slate-400 text-slate-600 bg-slate-300 rounded-sm p-0.5  hover:text-white"
       onClick={playFunction}/>}

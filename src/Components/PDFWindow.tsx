@@ -3,6 +3,7 @@ import { pdfjs, Document, Page } from 'react-pdf';
 import 'react-pdf/dist/Page/TextLayer.css';
 import 'react-pdf/dist/esm/Page/AnnotationLayer.css';
 import { FilesContext } from '../FilesContext';
+import { AutoScrollContext } from '../AutoscrollContext';
 
 // pdfjs.GlobalWorkerOptions.workerSrc = new URL(
 //   'pdfjs-dist/build/pdf.worker.min.js',
@@ -14,6 +15,7 @@ pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/$
 const PDFWindow = () => {
   //TODO: pdf render, load state, error state
   const [numPages, setNumPages] = React.useState(0);
+  const isPlaying = useContext(AutoScrollContext).isPlaying;
   const file = useContext(FilesContext).currentFile;
   
   // eslint-disable-next-line @typescript-eslint/no-explicit-any

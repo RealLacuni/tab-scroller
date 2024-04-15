@@ -49,7 +49,8 @@ const defaultSettings: Settings = {
     width: 800,
     height: 600,
     scale: 1,
-    pageLayout: 'single'
+    pageLayout: 'single',
+    scrollSpeed: 0,
 }
 
 export { getSettings, createSettings, updateSettings };

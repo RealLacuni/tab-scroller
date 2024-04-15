@@ -21,6 +21,7 @@ const api = {
   GetSettings: () => {
     return ipcRenderer.sendSync('getSettings');
   },
+  // unused
   onUpdatedSettings: (callback: (settings: Settings) => void) => {
     ipcRenderer.on('updatedSettings', (_, settings) => callback(settings));
   },
