@@ -39,6 +39,7 @@ const api = {
     ipcRenderer.send('close');
   }
 };
+
 contextBridge.exposeInMainWorld('Main', api);
 /**
  * Using the ipcRenderer directly in the browser through the contextBridge ist not really secure.

@@ -7,6 +7,7 @@ type UserSettingsType = {
   updateSettings: (settings: Settings) => void;
 };
 
+
 const initialValues = window.Main.GetSettings() as Settings;
 
 const SettingsContext = createContext<UserSettingsType>({ settings: initialValues, updateSettings: () => {} });
@@ -14,13 +15,18 @@ const SettingsContext = createContext<UserSettingsType>({ settings: initialValue
 function SettingsContextProvider({ children }: { children: React.ReactNode }) {
   const [settings, setSettings] = React.useState<Settings>(initialValues);
 
+  console.log('\ncontext speed is ' + settings.scrollSpeed);  
+
 //   updates both local copy of settings and persistent settings in the backend
-  const updateSettings = (settings: Settings) => {
-    setSettings(settings);
-    const success = window.Main.UpdateSettings(settings);
+  const updateSettings = (newSettings: Settings) => {
+
+    
+    setSettings({ ...newSettings });
+    const success = window.Main.UpdateSettings(newSettings);
     if (!success) {
       window.Main.PrintInBackend("Error updating settings");
     }
+    
   };
 
   return <SettingsContext.Provider value={{updateSettings, settings }}>{children}</SettingsContext.Provider>;

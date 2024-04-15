@@ -1,5 +1,5 @@
 import React from 'react';
-import { AutoScrollContext } from '../AutoscrollContext';
+import { SettingsContext } from '../SettingsContext';
 
 type SliderProps = {
   minVal: number;
@@ -7,7 +7,16 @@ type SliderProps = {
   stepSize: number;
 };
 const Slider = (props: SliderProps) => {
-  const { speed, handleSpeedChange } = React.useContext(AutoScrollContext);
+  const {settings, updateSettings } = React.useContext(SettingsContext);
+  const [speed, setSpeed] = React.useState(settings.scrollSpeed);
+
+  const handleSpeedChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSpeed(parseInt(e.target.value));
+  }
+
+  const propagateChanges = () => {
+    updateSettings({ ...settings, scrollSpeed: speed });
+  }
 
   return (
     <div
@@ -23,6 +32,7 @@ const Slider = (props: SliderProps) => {
         defaultValue={speed}
         className={'w-full h-1.5 rounded-lg cursor-pointer accent-indigo-600'}
         onChange={handleSpeedChange}
+        onMouseUp={propagateChanges}
       />
       <label htmlFor="default-range" className="self-end text-xs leading-[12px]">
         Speed: {speed ? speed : 'OFF'}
