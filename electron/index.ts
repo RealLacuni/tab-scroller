@@ -74,6 +74,10 @@ function createWindow() {
     event.returnValue = updateSettings(settings);
   });
 
+  ipcMain.on('PrintInBackend', (_, message) => {
+    console.log(message);
+  });
+
   window.once('ready-to-show', () => {
     window.show();
   });
