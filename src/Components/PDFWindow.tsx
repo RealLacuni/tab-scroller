@@ -3,6 +3,7 @@ import { pdfjs, Document, Page } from 'react-pdf';
 import 'react-pdf/dist/Page/TextLayer.css';
 import 'react-pdf/dist/esm/Page/AnnotationLayer.css';
 import { FilesContext } from '../FilesContext';
+import { SettingsContext } from '../SettingsContext';
 
 // pdfjs.GlobalWorkerOptions.workerSrc = new URL(
 //   'pdfjs-dist/build/pdf.worker.min.js',
@@ -15,7 +16,7 @@ const PDFWindow = () => {
   const [numPages, setNumPages] = React.useState(0);
   // const isPlaying = useContext(AutoScrollContext).isPlaying;
   const file = useContext(FilesContext).currentFile;
-  
+  const {settings} = useContext(SettingsContext);
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const extractFileInfo = (pdf: any) => {
     setNumPages(pdf._pdfInfo.numPages);
@@ -44,7 +45,8 @@ const PDFWindow = () => {
             key={`page_${index + 1}`}
             pageNumber={index + 1}
             scale={1}
-            width={800}
+            width={settings.width}
+            height={settings.height}
           />
         ))}
       </Document>

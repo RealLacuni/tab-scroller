@@ -1,32 +1,22 @@
 import {createContext } from 'react';
 import React from 'react';
 
-type AutoScrollType = {
-    isPlaying : boolean;
-    playFunction: () => void;
-    backToTopFunction: () => void;
-}
+type AutoScrollContextType = {
+    isPlaying: boolean;
+    setIsPlaying: React.Dispatch<React.SetStateAction<boolean>>;
+};
 
-const initialValues = {
+const AutoScrollContext = createContext<AutoScrollContextType>({
     isPlaying: false,
-    playFunction: () => {},
-    backToTopFunction: () => {},
-} as AutoScrollType;
-
-const AutoScrollContext = createContext<AutoScrollType>(initialValues);
+    setIsPlaying: () => {},
+});
 
 function AutoScrollContextProvider({children}: {children: React.ReactNode}) {
     const [isPlaying, setIsPlaying] = React.useState<boolean>(false);
 
-    const playFunction = () => {
-        setIsPlaying(!isPlaying);
-    }
-    const backToTopFunction = () => {
-        window.scrollTo(0,0);
-    }
     
     return (
-        <AutoScrollContext.Provider value={{ isPlaying, playFunction, backToTopFunction}}>
+        <AutoScrollContext.Provider value={{ isPlaying, setIsPlaying}}>
             {children}
         </AutoScrollContext.Provider>
     )
