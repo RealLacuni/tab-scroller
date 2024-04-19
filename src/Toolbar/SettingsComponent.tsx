@@ -6,7 +6,7 @@ import Slider from '../Components/Slider';
 
 const SettingsComponent = () => {
   const {settings, updateSettings} = React.useContext(SettingsContext);
-  const {scale, width, height, scrollSpeed, pageLayout} = settings;
+  const {pageLayout} = settings;
 
   const [isOpen, setIsOpen] = React.useState(false);
 
