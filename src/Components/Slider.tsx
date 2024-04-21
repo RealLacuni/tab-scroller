@@ -25,7 +25,6 @@ const Slider = (props: SliderProps) => {
   };
 
   const propagateChanges = () =>  {
-    console.log('updating speed ', value)
     updateSettings({ ...settings, [field]: value});
   };
 

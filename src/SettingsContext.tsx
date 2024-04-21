@@ -13,18 +13,26 @@ const SettingsContext = createContext<UserSettingsType>({ settings: initialValue
 
 function SettingsContextProvider({ children }: { children: React.ReactNode }) {
   const [settings, setSettings] = React.useState<Settings>(initialValues);
-//   updates both local copy of settings and persistent settings in the backend
-  const updateSettings = (newSettings: Settings) => {
-    console.log('updating settings, ', newSettings);
-    
-    setSettings({ ...newSettings });
-    const success = window.Main.UpdateSettings(newSettings);
-    if (!success) {
-      window.Main.PrintInBackend("Error updating settings");
-    }
-  };
 
-  return <SettingsContext.Provider value={{updateSettings, settings }}>{children}</SettingsContext.Provider>;
+  const contextValue = React.useMemo(() => {
+    const updateSettings = (newSettings: Settings) => {
+      setSettings((prevSettings) => {
+        return { ...prevSettings, ...newSettings };
+      });
+      const success = window.Main.UpdateSettings(newSettings);
+      if (!success) {
+        window.Main.PrintInBackend("Error updating settings");
+      }
+    };
+
+    return { updateSettings, settings };
+  }, [settings]);
+
+  return (
+    <SettingsContext.Provider value={contextValue}>
+      {children}
+    </SettingsContext.Provider>
+  );
 }
 
 export { SettingsContext, SettingsContextProvider };

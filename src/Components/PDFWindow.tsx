@@ -19,17 +19,18 @@ const PDFWindow = () => {
   const { isPlaying, setIsPlaying, containerRef } = useContext(AutoScrollContext);
   const { scrollSpeed, width, height } = useContext(SettingsContext).settings;
 
-  console.log(scrollSpeed);
-  
   useEffect(() => {
+    console.log('use effect');
+    
     let animationFrameId: number | null = null;
+    let lastTime: number = performance.now();
   
-    function scrollPage(speed: number, lastTime: number) {
+    function scrollPage() {
       if (!containerRef) return;
       const container = containerRef.current;
       if (!container) return;
   
-      if (container.scrollHeight - container.scrollTop <= container.clientHeight) {
+      if (container.scrollTop + container.clientHeight >= container.scrollHeight) {
         setIsPlaying(false);
         return;
       }
@@ -37,31 +38,20 @@ const PDFWindow = () => {
       const currentTime = performance.now();
       const elapsedTime = currentTime - lastTime;
   
-      if (elapsedTime > speed) {
-        const prevPosition = container.scrollTop;
+      if (elapsedTime > scrollSpeed) {
         container.scrollBy(0, 1);
-        const newPosition = container.scrollTop;
-        // manual way of stopping the scroll at the bottom of the file
-        if (prevPosition === newPosition) {
-          setIsPlaying(false);
-          return;
-        }
-        scrollPage(speed, currentTime);
-      } else {
-        animationFrameId = window.requestAnimationFrame(() => scrollPage(speed, lastTime));
+        lastTime = currentTime;
       }
+      animationFrameId = window.requestAnimationFrame(scrollPage);
     }
   
-    function animateScroll(speed: number, lastTime: number) {
+    function animateScroll() {
       if (!isPlaying) return;
-  
-      animationFrameId = window.requestAnimationFrame(() => {
-        scrollPage(speed, lastTime);
-      });
+      animationFrameId = window.requestAnimationFrame(scrollPage);
     }
   
     if (isPlaying) {
-      animateScroll(scrollSpeed, performance.now());
+      animateScroll();
     } else if (animationFrameId !== null) {
       window.cancelAnimationFrame(animationFrameId);
     }
@@ -71,8 +61,8 @@ const PDFWindow = () => {
         window.cancelAnimationFrame(animationFrameId);
       }
     };
-  }, [isPlaying, scrollSpeed, setIsPlaying]);
-
+  }, [isPlaying, setIsPlaying, scrollSpeed, containerRef]);
+  
   
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const extractFileInfo = (pdf: any) => {
