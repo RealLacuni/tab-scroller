@@ -19,6 +19,8 @@ const PDFWindow = () => {
   const { isPlaying, setIsPlaying, containerRef } = useContext(AutoScrollContext);
   const { scrollSpeed, width, height } = useContext(SettingsContext).settings;
 
+  console.log(scrollSpeed);
+  
   useEffect(() => {
     let animationFrameId: number | null = null;
   
@@ -89,7 +91,6 @@ const PDFWindow = () => {
 
   return (
     <div className="flex flex-col flex-1 overflow-y-auto" id="window" ref={containerRef}>
-      <button className='h-12 w-12 absolute left-0 top-8 bg-red-600' onClick={() => setIsPlaying(false)}>STOP</button>
       <Document
         file={file}
         onLoadSuccess={extractFileInfo}
