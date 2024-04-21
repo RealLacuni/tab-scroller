@@ -17,7 +17,7 @@ const nameMap = new Map<string, string>([
 
 const Slider = (props: SliderProps) => {
   const field = props.fieldName;
-  const { settings, updateSettings } = React.useContext(SettingsContext);
+  const {settings, updateSettings } = React.useContext(SettingsContext);
   const [value, setValue] = React.useState<number>(settings[field as keyof typeof settings] as number);
 
   const handleFieldChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -25,6 +25,7 @@ const Slider = (props: SliderProps) => {
   };
 
   const propagateChanges = () =>  {
+    console.log('updating speed ', value)
     updateSettings({ ...settings, [field]: value});
   };
 
