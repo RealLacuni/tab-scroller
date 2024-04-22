@@ -26,6 +26,7 @@ const api = {
     ipcRenderer.on('updatedSettings', (_, settings) => callback(settings));
   },
 
+
   /**
     Appbar utility functions
    */

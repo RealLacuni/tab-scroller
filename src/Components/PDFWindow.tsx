@@ -10,18 +10,16 @@ import { AutoScrollContext } from '../AutoscrollContext';
 //   'pdfjs-dist/build/pdf.worker.min.js',
 //   import.meta.url,
 // ).toString();
-
 pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
 
+//
 const PDFWindow = () => {
   const [numPages, setNumPages] = React.useState(0);
   const file = useContext(FilesContext).currentFile;
   const { isPlaying, setIsPlaying, containerRef } = useContext(AutoScrollContext);
-  const { scrollSpeed, width, height } = useContext(SettingsContext).settings;
+  const { scrollSpeed, width, scale, doublePage } = useContext(SettingsContext).settings;
 
   useEffect(() => {
-    console.log('use effect');
-    
     let animationFrameId: number | null = null;
     let lastTime: number = performance.now();
   
@@ -78,17 +76,18 @@ const PDFWindow = () => {
       </div>
     );
   }
-
+  
   return (
-    <div className="flex flex-col flex-1 overflow-y-auto" id="window" ref={containerRef}>
+    <div className={`flex flex-col flex-1 overflow-y-auto items-center bg-slate-400`} id="window" ref={containerRef}>
       <Document
         file={file}
         onLoadSuccess={extractFileInfo}
         // styling for 2-page layout like in Adobe Reader or Word, without overlapping pages
-        className={'grid grid-cols-2 gap-4'}
+        className={'grid gap-4' + (doublePage ? ' grid-cols-2' : ' grid-cols-1')}
+
       >
         {Array.from(new Array(numPages), (el, index) => (
-          <Page key={`page_${index + 1}`} pageNumber={index + 1} scale={1} width={width} height={height} />
+          <Page key={`page_${index + 1}`} pageNumber={index + 1} scale={scale} width={10 * width } />
         ))}
       </Document>
     </div>
