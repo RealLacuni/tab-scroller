@@ -3,10 +3,9 @@ import { AdjustmentsHorizontalIcon } from '@heroicons/react/24/outline';
 import { SettingsContext } from '../SettingsContext';
 import Slider from '../Components/Slider';
 
-
 const SettingsComponent = () => {
-  const {settings, updateSettings} = React.useContext(SettingsContext);
-  const {pageLayout} = settings;
+  const { settings, updateSettings } = React.useContext(SettingsContext);
+  const { doublePage } = settings;
 
   const [isOpen, setIsOpen] = React.useState(false);
 
@@ -33,28 +32,25 @@ const SettingsComponent = () => {
       />
       {/* popout small settings box anchored to the bottom left below the button */}
       {isOpen && (
-        <div className="absolute top-10 -left-2 bg-slate-300 min-h-48 min-w-36 border-2 border-slate-400 p-2 rounded-sm drop-shadow-lg z-30">
+        <div className="absolute top-10 -left-2 bg-slate-300 min-h-48 min-w-36 border-2 border-slate-400 p-2 rounded-sm drop-shadow-lg z-30 flex flex-col gap-4 justify-around">
           {/* div take up full height */}
-          <div className="flex flex-col gap-4">
             <Slider minVal={0} maxVal={4} stepSize={0.1} fieldName="scale" />
-            <Slider minVal={0} maxVal={1600} stepSize={50} fieldName="width" />
+            <Slider minVal={0} maxVal={100} stepSize={1} fieldName="width" />
             <Slider minVal={0} maxVal={1600} stepSize={50} fieldName="height" />
 
-            <div className='flex flex-row'>
+            <div className="flex flex-row pb-1 items-center">
               <label htmlFor="page-layout" className="text-xs leading-3">
-                Page Layout
+                Double Page 
               </label>
-              <select
+              <input
+                type="checkbox"
                 id="page-layout"
-                name="page-layout"
-                className="rounded-lg cursor-pointer text-sm bg-slate-200"
-                value={pageLayout}
-                onChange={(e) => updateSettings({ ...settings, pageLayout: e.target.value as 'single' | 'double'})}
-              >
-                <option value="single">Single</option>
-                <option value="double">Double</option>
-              </select>
-              </div>
+                checked={doublePage}
+                className='w-4 h-4 border border-slate-400 rounded-sm cursor-pointer ml-2 bg-pink-200'
+                onChange={(e) => {
+                  updateSettings({ ...settings, doublePage: e.target.checked });
+                }}
+              />
             </div>
         </div>
       )}

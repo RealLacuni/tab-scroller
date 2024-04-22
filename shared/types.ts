@@ -2,7 +2,7 @@ type Settings = {
     scale: number;
     width: number;
     height: number;
-    pageLayout: 'single' | 'double';
+    doublePage: boolean;
     scrollSpeed: number;
 }
 

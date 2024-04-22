@@ -7,7 +7,6 @@ type UserSettingsType = {
   updateSettings: (settings: Settings) => void;
 };
 
-
 const initialValues = window.Main.GetSettings() as Settings;
 const SettingsContext = createContext<UserSettingsType>({ settings: initialValues, updateSettings: () => {} });
 
@@ -21,18 +20,14 @@ function SettingsContextProvider({ children }: { children: React.ReactNode }) {
       });
       const success = window.Main.UpdateSettings(newSettings);
       if (!success) {
-        window.Main.PrintInBackend("Error updating settings");
+        window.Main.PrintInBackend('Error updating settings');
       }
     };
 
     return { updateSettings, settings };
   }, [settings]);
 
-  return (
-    <SettingsContext.Provider value={contextValue}>
-      {children}
-    </SettingsContext.Provider>
-  );
+  return <SettingsContext.Provider value={contextValue}>{children}</SettingsContext.Provider>;
 }
 
 export { SettingsContext, SettingsContextProvider };

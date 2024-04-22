@@ -13,7 +13,7 @@ const api = {
     ipcRenderer.send('add-file', fString);
   },
   PrintInBackend: (message: string) => {
-    return ipcRenderer.send('printInBackend', message);
+    ipcRenderer.send('printInBackend', message);
   },
   UpdateSettings: (preferences: Settings) => {
     return ipcRenderer.sendSync('updateSettings', preferences);
