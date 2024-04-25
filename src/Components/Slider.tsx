@@ -21,7 +21,8 @@ const Slider = (props: SliderProps) => {
   const [value, setValue] = React.useState<number>(settings[field as keyof typeof settings] as number);
 
   const handleFieldChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setValue(parseInt(e.target.value));
+    setValue(parseFloat(e.target.value));
+    updateSettings({ ...settings, [field]: parseFloat(e.target.value)});
   };
 
   const propagateChanges = () =>  {
