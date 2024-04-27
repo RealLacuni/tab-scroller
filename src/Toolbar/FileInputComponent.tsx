@@ -2,7 +2,6 @@ import React, { useContext } from 'react';
 import { FolderOpenIcon } from '@heroicons/react/24/outline';
 import { FilesContext } from '../FilesContext';
 
-
 const FileInputComponent = () => {
   const files = useContext(FilesContext).openFiles;
   const currentFile = useContext(FilesContext).currentFile;
@@ -13,8 +12,12 @@ const FileInputComponent = () => {
     document.getElementById('file-input')?.click();
   };
   return (
-    <div className="w-8">
-      <FolderOpenIcon className="w-8 h-8 cursor-pointer border border-slate-400 text-slate-600 bg-slate-300 rounded-sm p-0.5  hover:text-white" onClick={handleClick} />
+    <div>
+      <FolderOpenIcon
+        className="w-8 h-8 cursor-pointer border rounded-lg p-0.5
+        bg-slate-300 border-slate-400 text-slate-600  hover:text-white"
+        onClick={handleClick}
+      />
       <input
         id="file-input"
         aria-label="file-input"

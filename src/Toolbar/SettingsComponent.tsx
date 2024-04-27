@@ -32,7 +32,7 @@ const SettingsComponent = () => {
       />
       {/* popout small settings box anchored to the bottom left below the button */}
       {isOpen && (
-        <div className="absolute top-10 -left-2 bg-slate-300 min-h-48 min-w-36 border-2 border-slate-400 p-2 rounded-sm drop-shadow-lg z-30 flex flex-col gap-4 justify-around">
+        <div className="absolute top-10 -right-2 bg-slate-300 min-h-48 min-w-36 border-2 border-slate-400 p-2 rounded-sm drop-shadow-lg z-30 flex flex-col gap-4 justify-around">
           {/* div take up full height */}
             <Slider minVal={0} maxVal={2} stepSize={0.1} fieldName="scale" />
             <Slider minVal={0} maxVal={100} stepSize={1} fieldName="width" />

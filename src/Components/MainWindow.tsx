@@ -58,8 +58,8 @@ const MainWindow = () => {
   //if .pdf return <PDFWindow />
   if (!file) {
     return (
-      <div>
-        <h1>No file selected</h1>
+      <div className='w-full h-full bg-slate-400 flex flex-row items-center justify-center'>
+        <h1 className='text-slate-600 text-2xl font-thin'>No file selected</h1>
       </div>
     );
   } else if (file && file.type === 'application/pdf') {

@@ -8,10 +8,10 @@ const TabList = () => {
   const updateCurrentFile = useContext(FilesContext).updateCurrentFile;
   const updateOpenFiles = useContext(FilesContext).updateOpenFiles;
 
-  console.log("tablist: ", tabs);
-  
+  console.log('tablist: ', tabs);
+
   if (tabs.length === 0) {
-    return <p className="self-bottom py-1"> &larr; Open a file and start playing! </p>;
+    return <></>
   }
 
   const setActiveTab = (idx: number) => {
@@ -19,14 +19,13 @@ const TabList = () => {
     setOpenIndex(idx);
   };
 
-  const getFileName = (fName : string) => {
+  const getFileName = (fName: string) => {
     try {
       return fName.split('.')[0];
-    }
-    catch {
+    } catch {
       return fName;
     }
-  }
+  };
 
   return (
     <div className="flex flex-row gap-[0.075rem] overflow-x-clip">
@@ -56,12 +55,11 @@ const TabList = () => {
                   updateCurrentFile(null);
                 }
               }
-            
-            }
-            }
+            }}
           />
         </div>
       ))}
+      <div className="h-8 w-[0.5px] bg-slate-400 self-center"></div>
     </div>
   );
 };
