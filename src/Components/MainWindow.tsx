@@ -59,7 +59,7 @@ const MainWindow = () => {
   if (!file) {
     return (
       <div className='w-full h-full bg-slate-400 flex flex-row items-center justify-center'>
-        <h1 className='text-slate-600 text-2xl font-thin'>No file selected</h1>
+        <h1 className='text-slate-600 text-2xl font-thin tracking-tight'>No file selected</h1>
       </div>
     );
   } else if (file && file.type === 'application/pdf') {
