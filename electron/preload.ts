@@ -25,8 +25,11 @@ const api = {
   onUpdatedSettings: (callback: (settings: Settings) => void) => {
     ipcRenderer.on('updatedSettings', (_, settings) => callback(settings));
   },
-
-
+  readImageFile: (filePath: string) => {
+    return ipcRenderer.invoke('read-image-file', filePath).then((data) => {
+      return data;
+    });
+  },
   /**
     Appbar utility functions
    */

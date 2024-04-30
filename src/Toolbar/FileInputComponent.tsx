@@ -22,7 +22,7 @@ const FileInputComponent = () => {
         id="file-input"
         aria-label="file-input"
         type="file"
-        accept=".text/plain, application/pdf, images/*, .pdf, .jpeg, .png"
+        accept=".text/plain, application/pdf, images/*, .pdf, .jpeg, .png, .jpg"
         className="w-48 h-8 bg-transparent hidden"
         onChange={(e) => {
           const selectedFile = e.target.files?.[0];

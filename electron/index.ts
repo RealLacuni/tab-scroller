@@ -1,5 +1,6 @@
 // Native
 import { join } from 'path';
+import * as fs from 'fs';
 
 // Packages
 import { BrowserWindow, app, ipcMain } from 'electron';
@@ -76,6 +77,15 @@ function createWindow() {
 
   ipcMain.on('PrintInBackend', (_, message) => {
     console.log(message);
+  });
+
+  ipcMain.handle('read-image-file', async (_event, filePath) => {
+    try {
+      return fs.readFileSync(filePath, { encoding: 'base64' })
+    } catch (err) {
+      console.error(err);
+      return null;
+    }
   });
 
   window.once('ready-to-show', () => {
