@@ -1,14 +1,12 @@
 import React, { useContext } from 'react';
 import { FilesContext } from '../FilesContext';
 import { XMarkIcon } from '@heroicons/react/24/outline';
+import { AutoScrollContext } from '../AutoscrollContext';
 const TabList = () => {
-  const tabs = useContext(FilesContext).openFiles;
-  const currentFile = useContext(FilesContext).currentFile;
+  const {openFiles, currentFile, updateCurrentFile, updateOpenFiles} = useContext(FilesContext);
+  const {setIsPlaying} = useContext(AutoScrollContext);
+  const tabs = openFiles;
   const [openIndex, setOpenIndex] = React.useState<number>(currentFile ? tabs.indexOf(currentFile as File) : 0);
-  const updateCurrentFile = useContext(FilesContext).updateCurrentFile;
-  const updateOpenFiles = useContext(FilesContext).updateOpenFiles;
-
-  console.log('tablist: ', tabs);
 
   if (tabs.length === 0) {
     return <></>
@@ -49,6 +47,7 @@ const TabList = () => {
               newTabs.splice(idx, 1);
               updateOpenFiles(newTabs);
               if (idx === openIndex) {
+                setIsPlaying(false);
                 if (newTabs.length > 0) {
                   updateCurrentFile(newTabs[idx === 0 ? 0 : idx - 1]);
                 } else {
