@@ -5,11 +5,7 @@ import * as fs from 'fs';
 // Packages
 import { BrowserWindow, app, ipcMain } from 'electron';
 import isDev from 'electron-is-dev';
-import { updateElectronApp } from 'update-electron-app';
 import { getSettings, updateSettings } from './settings';
-
-updateElectronApp({
-});
 
 const height = 600;
 const width = 800;
