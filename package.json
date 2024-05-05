@@ -88,11 +88,9 @@
     "appId": "com.reallacuni.tab-scroller",
     "productName": "Tab Scroller",
     "files": [
-      "dist/**/*",
       "main/**/*",
       "node_modules/**/*",
-      "src/out/*",
-      "build/**/*",
+      "src/**/*",
       "package.json",
       "tsconfig.json",
       "vite.config.ts"
