@@ -25,7 +25,6 @@ function createWindow() {
       preload: join(__dirname, 'preload.js')
     }
   });
-  console.log('dirname', __dirname);
   
   const port = process.env.PORT || 3000;
   const mainUrl = isDev
@@ -84,7 +83,6 @@ function createWindow() {
 
   window.once('ready-to-show', () => {
     window.show();
-    window.webContents.openDevTools();
   });
 }
 

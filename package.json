@@ -111,8 +111,7 @@
       "artifactName": "Tab Scroller.${ext}",
       "asar": true,
       "target": [
-        "portable",
-        "zip"
+        "nsis"
       ]
     },
     "linux": {
