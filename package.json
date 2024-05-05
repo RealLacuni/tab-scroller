@@ -19,7 +19,7 @@
     "guitar tabulature"
   ],
   "repository": {
-    "url": "https://github.com/reallacuni/tabscroller"
+    "url": "https://github.com/reallacuni/tab-scroller"
   },
   "productName": "Tab Scroller",
   "scripts": {
@@ -129,7 +129,7 @@
   "publishConfig": {
     "provider": "github",
     "owner": "RealLacuni",
-    "repo": "tabscroller",
+    "repo": "tab-scroller",
     "releaseType": "release"
   },
   "release": {

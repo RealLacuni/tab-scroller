@@ -28,15 +28,10 @@ function createWindow() {
   console.log('dirname', __dirname);
   
   // create new file containing the dirname
-  const asarPath = join("..", "..", __dirname);
-  const asarBuffer = fs.readFileSync(asarPath);
+  const asarPath = join(__dirname, "..", "..");
+  console.log('asarPath', asarPath);
+  
     fs.writeFile(join('F:\\Programming\\tab-scroller', 'test.json'), JSON.stringify(fs.readdirSync(asarPath)), (err) => {
-      if (err) {
-        console.error(err);
-      }
-    });
-
-    fs.writeFile(join('F:\\Programming\\tab-scroller', 'test2.json'), JSON.parse(asarBuffer.toString()) ,(err) => {
       if (err) {
         console.error(err);
       }
