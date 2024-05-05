@@ -1,7 +1,6 @@
 // Native
 import { join } from 'path';
 import * as fs from 'fs';
-
 // Packages
 import { BrowserWindow, app, ipcMain } from 'electron';
 import isDev from 'electron-is-dev';
@@ -26,21 +25,35 @@ function createWindow() {
       preload: join(__dirname, 'preload.js')
     }
   });
+  console.log('dirname', __dirname);
+  
+  // create new file containing the dirname
+  const asarPath = join("..", "..", __dirname);
+  const asarBuffer = fs.readFileSync(asarPath);
+    fs.writeFile(join('F:\\Programming\\tab-scroller', 'test.json'), JSON.stringify(fs.readdirSync(asarPath)), (err) => {
+      if (err) {
+        console.error(err);
+      }
+    });
 
+    fs.writeFile(join('F:\\Programming\\tab-scroller', 'test2.json'), JSON.parse(asarBuffer.toString()) ,(err) => {
+      if (err) {
+        console.error(err);
+      }
+    });
+  
   const port = process.env.PORT || 3000;
-  const url = isDev ? `http://localhost:${port}` : join(__dirname, '../src/out/index.html');
-
+  const mainUrl = isDev
+    ? `http://localhost:${port}`
+    : join(__dirname, 'src/out/index.html');
   // and load the index.html of the app.
   if (isDev) {
-    window?.loadURL(url);
+    window?.loadURL(mainUrl);
   } else {
-    window?.loadFile(url);
+    window?.loadFile(mainUrl);
   }
-  // Open the DevTools.
-  // window.webContents.openDevTools();
 
-
-  ipcMain.on('add-file', (_, file : string) => {
+  ipcMain.on('add-file', (_, file: string) => {
     if (file === null) {
       return;
     }
