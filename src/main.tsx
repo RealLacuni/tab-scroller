@@ -1,11 +1,16 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 
-ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
-  document.getElementById('root')
-);
+// use create root instead
+import { createRoot } from 'react-dom/client';
+import { FilesContextProvider } from './FilesContext';
+
+const rootElement = document.getElementById('root');
+if (rootElement) {
+  createRoot(rootElement).render(
+      <FilesContextProvider>
+      <App />
+      </FilesContextProvider>
+  );
+}

@@ -2,21 +2,24 @@
   "name": "tab-scroller",
   "version": "0.0.1",
   "license": "GPL-3.0-only",
-  "main": "main/index.js",
+  "private": true,
+  "main": "main/electron/index.js",
   "author": {
-    "name": "Rene Pazitny",
-    "email": "renepazitny@gatech.edu",
-    "url": "https:L//github.com/reallacuni"
+    "name": "reallacuni",
+    "url": "https://github.com/reallacuni"
   },
   "description": "Electron app for opening sheet music PDF files.",
   "keywords": [
     "vite",
     "react",
     "electron",
-    "typescript"
+    "typescript",
+    "pdf.js",
+    "sheet music",
+    "guitar tabulature"
   ],
   "repository": {
-    "url": "https://github.com/reallacuni/tab-scroller"
+    "url": "https://github.com/reallacuni/tabscroller"
   },
   "productName": "Tab Scroller",
   "scripts": {
@@ -28,6 +31,12 @@
     "build:electron": "tsc -p electron",
     "dist": "npm run build && electron-builder",
     "pack": "npm run build && electron-builder --dir",
+    "dist:mac": "npm run build && electron-builder --mac --publish=never",
+    "dist:win": "npm run build && electron-builder --win --publish=never",
+    "dist:linux": "npm run build && electron-builder --linux --publish=never",
+    "pack:mac": "npm run build && electron-builder --dir --mac --publish=never",
+    "pack:win": "npm run build && electron-builder --dir --win --publish=never",
+    "pack:linux": "npm run build && electron-builder --dir --linux --publish=never",
     "clean": "rimraf dist main src/out",
     "type-check": "tsc",
     "lint": "eslint . --ext js,jsx,ts,tsx",
@@ -35,26 +44,30 @@
   },
   "dependencies": {
     "@headlessui/react": "^1.7.18",
+    "@heroicons/react": "^2.1.1",
     "@vitejs/plugin-react": "^1.2.0",
+    "canvas": "^2.11.2",
     "electron-is-dev": "^2.0.0",
     "pdf.js": "^0.1.0",
-    "react": "^17.0.2",
-    "react-dom": "^17.0.2",
-    "vite": "^2.8.6",
+    "pdfjs-dist": "^4.0.379",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-pdf": "^7.7.1",
     "yarn": "^1.22.21"
   },
   "devDependencies": {
-    "@types/node": "^17.0.22",
+    "@types/node": "^20.11.30",
+    "@types/pdfjs-dist": "^2.10.378",
     "@types/react": "^17.0.41",
     "@types/react-dom": "^17.0.14",
-    "@typescript-eslint/eslint-plugin": "5.16.0",
-    "@typescript-eslint/parser": "5.16.0",
+    "@typescript-eslint/eslint-plugin": "^7.0.2",
+    "@typescript-eslint/parser": "7.0.2",
     "autoprefixer": "^10.4.4",
     "concurrently": "^7.0.0",
     "cross-env": "^7.0.3",
     "electron": "^26.0.0",
     "electron-builder": "^24.9.1",
-    "eslint": "8.47.0",
+    "eslint": "^8.57.0",
     "eslint-config-airbnb": "19.0.4",
     "eslint-config-prettier": "9.0.0",
     "eslint-plugin-import": "^2.28.0",
@@ -67,16 +80,84 @@
     "postcss": "^8.4.28",
     "prettier": "3.0.2",
     "tailwindcss": "^3.3.3",
-    "typescript": "^5.1.6"
+    "typescript": "^5.2",
+    "vite": "^5.2.6",
+    "vite-plugin-static-copy": "^1.0.1"
   },
   "build": {
-    "asar": true,
+    "appId": "com.reallacuni.tab-scroller",
+    "productName": "Tab Scroller",
     "files": [
-      "main",
-      "src/out"
+      "dist/**/*",
+      "main/**/*",
+      "node_modules/**/*",
+      "src/out/*",
+      "build/**/*",
+      "package.json",
+      "tsconfig.json",
+      "vite.config.ts"
     ],
-    "directories": {
-      "buildResources": "resources"
+    "mac": {
+      "icon": "assets/icon.icns",
+      "artifactName": "Tab Scroller.${ext}",
+      "target": [
+        "dmg",
+        "zip"
+      ]
+    },
+    "dmg": {
+      "sign": false
+    },
+    "win": {
+      "icon": "assets/icon.ico",
+      "artifactName": "Tab Scroller.${ext}",
+      "asar": true,
+      "target": [
+        "portable",
+        "zip"
+      ]
+    },
+    "linux": {
+      "icon": "assets/icon.png",
+      "artifactName": "Tab Scroller.${ext}",
+      "target": [
+        "AppImage",
+        "deb"
+      ]
     }
+  },
+  "publishConfig": {
+    "provider": "github",
+    "owner": "RealLacuni",
+    "repo": "tabscroller",
+    "releaseType": "release"
+  },
+  "release": {
+    "branches": [
+      "main"
+    ],
+    "tagFormat": "v${version}",
+    "plugins": [
+      "@semantic-release/git",
+      [
+        "@semantic-release/github",
+        {
+          "assets": [
+            {
+              "path": "dist/*"
+            },
+            {
+              "path": "CHANGELOG.md"
+            }
+          ]
+        }
+      ],
+      [
+        "@semantic-release/changelog",
+        {
+          "changelogFile": "CHANGELOG.md"
+        }
+      ]
+    ]
   }
 }

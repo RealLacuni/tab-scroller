@@ -2,6 +2,7 @@ import react from '@vitejs/plugin-react';
 import { UserConfig, ConfigEnv } from 'vite';
 import { join } from 'path';
 
+
 const srcRoot = join(__dirname, 'src');
 
 export default ({ command }: ConfigEnv): UserConfig => {
@@ -18,6 +19,7 @@ export default ({ command }: ConfigEnv): UserConfig => {
       },
       build: {
         outDir: join(srcRoot, '/out'),
+        target: 'esnext',
         emptyOutDir: true,
         rollupOptions: {}
       },

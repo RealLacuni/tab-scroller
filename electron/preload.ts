@@ -1,4 +1,5 @@
 import { ipcRenderer, contextBridge } from 'electron';
+import { Settings } from '../shared/types';
 
 declare global {
   interface Window {
@@ -8,18 +9,29 @@ declare global {
 }
 
 const api = {
-  /**
-   * Here you can expose functions to the renderer process
-   * so they can interact with the main (electron) side
-   * without security problems.
-   *
-   * The function below can accessed using `window.Main.sayHello`
-   */
-  sendMessage: (message: string) => {
-    ipcRenderer.send('message', message);
+  addFile: (fString : string) => {
+    ipcRenderer.send('add-file', fString);
+  },
+  PrintInBackend: (message: string) => {
+    ipcRenderer.send('printInBackend', message);
+  },
+  UpdateSettings: (preferences: Settings) => {
+    return ipcRenderer.sendSync('updateSettings', preferences);
+  },
+  GetSettings: () => {
+    return ipcRenderer.sendSync('getSettings');
+  },
+  // unused
+  onUpdatedSettings: (callback: (settings: Settings) => void) => {
+    ipcRenderer.on('updatedSettings', (_, settings) => callback(settings));
+  },
+  readImageFile: (filePath: string) => {
+    return ipcRenderer.invoke('read-image-file', filePath).then((data) => {
+      return data;
+    });
   },
   /**
-    Here function for AppBar
+    Appbar utility functions
    */
   Minimize: () => {
     ipcRenderer.send('minimize');
@@ -31,6 +43,7 @@ const api = {
     ipcRenderer.send('close');
   }
 };
+
 contextBridge.exposeInMainWorld('Main', api);
 /**
  * Using the ipcRenderer directly in the browser through the contextBridge ist not really secure.

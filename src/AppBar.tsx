@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 
 import Icon from './assets/icons/Icon-Electron.png';
-import MainBar from './MainBar';
 
 const AppBar = () => {
   const [isMaximize, setMaximize] = useState(false);
@@ -17,10 +16,10 @@ const AppBar = () => {
 
   return (
     <>
-      <div className="py-0.5 flex justify-between draggable">
+      <div className="fixed top-0 left-0 z-50 w-full py-0.5 flex justify-between draggable bg-slate-800 text-slate-300 overflow-hidden">
         <div className="inline-flex">
           <img className="h-6 lg:-ml-2" src={Icon} alt="Icon of Electron" />
-          <p className="text-xs md:pt-1 md:-ml-1 lg:-ml-2">Vite App</p>
+          <p className="text-xs md:pt-1 md:-ml-1 lg:-ml-2">Tab Scroller</p>
         </div>
         <div className="inline-flex -mt-1">
           <button onClick={window.Main.Minimize} className="undraggable md:px-4 lg:px-3 pt-1 hover:bg-gray-300">
@@ -34,7 +33,6 @@ const AppBar = () => {
           </button>
         </div>
       </div>
-      <MainBar />
     </>
   );
 }
