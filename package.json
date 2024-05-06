@@ -45,7 +45,6 @@
     "@headlessui/react": "^1.7.18",
     "@heroicons/react": "^2.1.1",
     "@vitejs/plugin-react": "^1.2.0",
-    "canvas": "^2.11.2",
     "electron-is-dev": "^2.0.0",
     "pdf.js": "^0.1.0",
     "pdfjs-dist": "^4.0.379",
@@ -85,6 +84,7 @@
   },
   "build": {
     "appId": "com.reallacuni.tab-scroller",
+    "productName": "Tab Scroller",
     "files": [
       "main/**/*",
       "node_modules/**/*",
@@ -165,5 +165,4 @@
       ]
     ]
   }
-
 }
