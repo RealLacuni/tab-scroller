@@ -4,11 +4,11 @@ import 'react-pdf/dist/Page/TextLayer.css';
 import 'react-pdf/dist/esm/Page/AnnotationLayer.css';
 import { FilesContext } from '../FilesContext';
 
-// pdfjs.GlobalWorkerOptions.workerSrc = new URL(
-//   'pdfjs-dist/build/pdf.worker.min.js',
-//   import.meta.url,
-// ).toString();
-pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
+pdfjs.GlobalWorkerOptions.workerSrc = new URL(
+  '../../pdfjs-dist/build/pdf.worker.min.js',
+  import.meta.url,
+).toString();
+// pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
 
 type PDFWindowProps = {
   containerRef: React.RefObject<HTMLDivElement> | null;
@@ -23,7 +23,7 @@ const PDFWindow = (props: PDFWindowProps) => {
   const [numPages, setNumPages] = React.useState(0);
   const file = useContext(FilesContext).currentFile;
   const { containerRef, width, scale, doublePage } = props;
-  
+
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const extractFileInfo = (pdf: any) => {
     setNumPages(pdf._pdfInfo.numPages);
