@@ -1,5 +1,6 @@
 {
   "name": "tab-scroller",
+  "productName": "Tab Scroller",
   "version": "0.0.1",
   "license": "GPL-3.0-only",
   "private": true,
@@ -84,7 +85,6 @@
   },
   "build": {
     "appId": "com.reallacuni.tab-scroller",
-    "productName": "Tab Scroller",
     "files": [
       "main/**/*",
       "node_modules/**/*",
