@@ -21,7 +21,6 @@
   "repository": {
     "url": "https://github.com/reallacuni/tab-scroller"
   },
-  "productName": "Tab Scroller",
   "scripts": {
     "dev": "concurrently \"yarn dev:vite\" \" yarn dev:electron\"",
     "dev:vite": "vite",
@@ -86,7 +85,6 @@
   },
   "build": {
     "appId": "com.reallacuni.tab-scroller",
-    "productName": "Tab Scroller",
     "files": [
       "main/**/*",
       "node_modules/**/*",
@@ -106,12 +104,23 @@
     "dmg": {
       "sign": false
     },
+    "nsis": {
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true,
+      "oneClick": false,
+      "artifactName": "Tab Scroller-setup.${ext}",
+      "uninstallDisplayName": "Tab Scroller"
+    },
+    "portable": {
+      "artifactName": "Tab Scroller-portable.${ext}"
+    },
     "win": {
       "icon": "assets/icon.ico",
-      "artifactName": "Tab Scroller.${ext}",
       "asar": true,
       "target": [
-        "nsis"
+        "nsis",
+        "portable"
       ]
     },
     "linux": {
@@ -133,7 +142,6 @@
     "branches": [
       "main"
     ],
-    "tagFormat": "v${version}",
     "plugins": [
       "@semantic-release/git",
       [
@@ -157,4 +165,5 @@
       ]
     ]
   }
+
 }
