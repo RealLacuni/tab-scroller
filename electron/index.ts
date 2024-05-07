@@ -83,6 +83,7 @@ function createWindow() {
 
   window.once('ready-to-show', () => {
     window.show();
+    isDev && window.webContents.openDevTools();
   });
 }
 
