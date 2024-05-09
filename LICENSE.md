@@ -676,7 +676,7 @@ Copy license text to clipboard
 Suggest this license
 Make a pull request to suggest this license for a project that is not licensed. Please be polite: see if a license has already been suggested, try to suggest a license fitting for the project’s community, and keep your communication with project maintainers friendly.
 
-Enter GitHub repository URL
+<https://github.com/RealLacuni/tabscroller>
 How to apply this license
 Create a text file (typically named COPYING, as per GNU conventions) in the root of your source code and copy the text of the license into the file.
 
