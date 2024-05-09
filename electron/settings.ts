@@ -46,8 +46,8 @@ function updateSettings(settings: Settings): boolean {
 }
 
 const defaultSettings: Settings = {
-    width: 800,
-    height: 600,
+    width: 50,
+    height: 10,
     scale: 1,
     doublePage: false,
     scrollSpeed: 0,
