@@ -1,0 +1,160 @@
+name:
+  package and release
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-windows:
+      runs-on: windows-latest
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      steps:
+        - name: Checkout code
+          uses: actions/checkout@v4
+          with:
+           token: ${{ secrets.GITHUB_TOKEN }}
+  
+        - name: Set up Node.js
+          uses: actions/setup-node@v2
+          with:
+            node-version: '21.1.0'
+  
+        - name: Install dependencies
+          run: npm install
+          
+        - name: Delete canvas dependency due to electron incompatability
+          run: rm node_modules/canvas -r
+          
+        - name: Build Electron app for Windows
+          run: npm run dist:win
+          
+        - name: Archive build artifacts
+          uses: actions/upload-artifact@v2
+          with:
+            name: dist-win
+            path: dist/*.exe  
+  build-macos:
+      runs-on: macos-latest
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  
+      steps:
+        - name: Checkout code
+          uses: actions/checkout@v4
+          with:
+            token: ${{ secrets.GITHUB_TOKEN }}
+  
+        - name: Set up Node.js
+          uses: actions/setup-node@v2
+          with:
+            node-version: '21.1.0'
+  
+        - name: Install dependencies
+          run: npm install
+  
+        - name: Build Electron app for macOS
+          run: npm run dist:mac
+  
+        - name: Archive build artifacts
+          uses: actions/upload-artifact@v2
+          with:
+            name: dist-mac
+            path: |
+                dist/*.app
+                dist/*.dmg
+                dist/*.zip
+            
+  # build-linux:
+  #     runs-on: ubuntu-latest
+  #     env:
+  #       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  #     steps:
+  #       - name: Checkout code
+  #         uses: actions/checkout@v4
+  
+  #       - name: Set up Node.js
+  #         uses: actions/setup-node@v2
+  #         with:
+  #           node-version: '21.1.0'
+  
+  #       - name: Install dependencies
+  #         run: npm install
+  
+  #       - name: Build Electron app for Linux
+  #         run: npm run dist:linux
+          
+  #       - name: Debug dist-linux
+  #         run: ls -al dist/linux-unpacked
+          
+  #       - name: Archive build artifacts
+  #         uses: actions/upload-artifact@v2
+  #         with:
+  #           name: dist-linux
+  #           path: |
+  #                 dist/*.deb
+                  # dist/*.AppImage
+                  
+  semantic-release:
+    needs: [build-macos, build-windows] # linux removed
+    runs-on: ubuntu-latest
+    env:
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          
+      - name: Set up Node.js with Yarn
+        uses: actions/setup-node@v4
+        with:
+          node-version: 21.5.0
+          registry-url: 'https://registry.yarnpkg.com/'
+
+      - name: Install dependencies with Yarn
+        run: yarn install
+        
+      # - name: Download linux artifacts
+      #   uses: actions/download-artifact@v2
+      #   with:
+      #     name: dist-linux
+      #     path: dist-linux
+              
+      - name: Download mac artifacts
+        uses: actions/download-artifact@v2
+        with:
+          name: dist-mac
+          path: dist-mac    
+          
+      - name: Download windows artifacts
+        uses: actions/download-artifact@v2
+        with:
+          name: dist-win
+          path: dist-win   
+          
+      - name: Debug all
+        run: ls -al
+        
+      - name: Debug dist-mac
+        run: ls -al dist-mac
+        
+      - name: debug dist-win
+        run: ls -al dist-win
+        
+      - name: Merge build artifacts
+        run: |
+          # cp -R dist-linux/. dist/
+          cp -R dist-mac/. dist/
+          cp -R dist-win/. dist/
+
+      - name: Print Current Directory Contents
+        run: ls -al dist
+        
+      - name: Run Semantic Release on merge to main
+        uses: cycjimmy/semantic-release-action@v4
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    
