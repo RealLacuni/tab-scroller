@@ -156,5 +156,5 @@ jobs:
       - name: Run Semantic Release on merge to main
         uses: cycjimmy/semantic-release-action@v4
         env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_TOKEN: ${{ secrets.RELEASE_TOKEN }}
     
