@@ -20,7 +20,7 @@
     "guitar tabulature"
   ],
   "repository": {
-    "url": "https://github.com/reallacuni/tab-scroller"
+    "url": "https://github.com/reallacuni/tabscroller.git"
   },
   "scripts": {
     "dev": "concurrently \"yarn dev:vite\" \" yarn dev:electron\"",
@@ -136,7 +136,7 @@
   "publishConfig": {
     "provider": "github",
     "owner": "RealLacuni",
-    "repo": "tabscroller",
+    "repo": "tab-scroller",
     "releaseType": "release"
   },
   "release": {
