@@ -67,38 +67,38 @@ jobs:
                 dist/*.dmg
                 dist/*.zip
             
-  build-linux:
-      runs-on: ubuntu-latest
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      steps:
-        - name: Checkout code
-          uses: actions/checkout@v4
+  # build-linux:
+  #     runs-on: ubuntu-latest
+  #     env:
+  #       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  #     steps:
+  #       - name: Checkout code
+  #         uses: actions/checkout@v4
   
-        - name: Set up Node.js
-          uses: actions/setup-node@v2
-          with:
-            node-version: '21.1.0'
+  #       - name: Set up Node.js
+  #         uses: actions/setup-node@v2
+  #         with:
+  #           node-version: '21.1.0'
   
-        - name: Install dependencies
-          run: npm install
+  #       - name: Install dependencies
+  #         run: npm install
   
-        - name: Build Electron app for Linux
-          run: npm run dist:linux
+  #       - name: Build Electron app for Linux
+  #         run: npm run dist:linux
           
-        - name: Debug dist-linux
-          run: ls -al dist/linux-unpacked
+  #       - name: Debug dist-linux
+  #         run: ls -al dist/linux-unpacked
           
-        - name: Archive build artifacts
-          uses: actions/upload-artifact@v2
-          with:
-            name: dist-linux
-            path: |
-                  dist/*.deb
-                  dist/*.AppImage
+  #       - name: Archive build artifacts
+  #         uses: actions/upload-artifact@v2
+  #         with:
+  #           name: dist-linux
+  #           path: |
+  #                 dist/*.deb
+                  # dist/*.AppImage
                   
   semantic-release:
-    needs: [build-linux, build-macos, build-windows]
+    needs: [build-macos, build-windows] # linux removed
     runs-on: ubuntu-latest
     env:
       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -117,11 +117,11 @@ jobs:
       - name: Install dependencies with Yarn
         run: yarn install
         
-      - name: Download linux artifacts
-        uses: actions/download-artifact@v2
-        with:
-          name: dist-linux
-          path: dist-linux
+      # - name: Download linux artifacts
+      #   uses: actions/download-artifact@v2
+      #   with:
+      #     name: dist-linux
+      #     path: dist-linux
               
       - name: Download mac artifacts
         uses: actions/download-artifact@v2
@@ -146,7 +146,7 @@ jobs:
         
       - name: Merge build artifacts
         run: |
-          cp -R dist-linux/. dist/
+          # cp -R dist-linux/. dist/
           cp -R dist-mac/. dist/
           cp -R dist-win/. dist/
 
