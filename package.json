@@ -136,7 +136,7 @@
   "publishConfig": {
     "provider": "github",
     "owner": "RealLacuni",
-    "repo": "tab-scroller",
+    "repo": "tabscroller",
     "releaseType": "release"
   },
   "release": {
