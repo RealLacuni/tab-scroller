@@ -1,5 +1,6 @@
 {
   "name": "tab-scroller",
+  "ProductName": "Tab Scroller",
   "version": "0.0.1",
   "license": "GPL-3.0-only",
   "private": true,
@@ -21,7 +22,6 @@
   "repository": {
     "url": "https://github.com/reallacuni/tab-scroller"
   },
-  "productName": "Tab Scroller",
   "scripts": {
     "dev": "concurrently \"yarn dev:vite\" \" yarn dev:electron\"",
     "dev:vite": "vite",
@@ -46,10 +46,7 @@
     "@headlessui/react": "^1.7.18",
     "@heroicons/react": "^2.1.1",
     "@vitejs/plugin-react": "^1.2.0",
-    "canvas": "^2.11.2",
     "electron-is-dev": "^2.0.0",
-    "pdf.js": "^0.1.0",
-    "pdfjs-dist": "^4.0.379",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-pdf": "^7.7.1",
@@ -57,7 +54,6 @@
   },
   "devDependencies": {
     "@types/node": "^20.11.30",
-    "@types/pdfjs-dist": "^2.10.378",
     "@types/react": "^17.0.41",
     "@types/react-dom": "^17.0.14",
     "@typescript-eslint/eslint-plugin": "^7.0.2",
@@ -86,16 +82,17 @@
   },
   "build": {
     "appId": "com.reallacuni.tab-scroller",
-    "productName": "Tab Scroller",
     "files": [
-      "dist/**/*",
       "main/**/*",
       "node_modules/**/*",
-      "src/out/*",
-      "build/**/*",
+      "src/**/*",
       "package.json",
       "tsconfig.json",
       "vite.config.ts"
+    ],
+    "extraFiles": [
+      "node_modules/react-pdf/node_modules/pdfjs-dist/",
+      "node_modules/react-pdf/node_modules/pdfjs-dist/build/"
     ],
     "mac": {
       "icon": "assets/icon.icns",
@@ -108,13 +105,23 @@
     "dmg": {
       "sign": false
     },
+    "nsis": {
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true,
+      "oneClick": false,
+      "artifactName": "Tab Scroller-setup.${ext}",
+      "uninstallDisplayName": "Tab Scroller"
+    },
+    "portable": {
+      "artifactName": "Tab Scroller-portable.${ext}"
+    },
     "win": {
       "icon": "assets/icon.ico",
-      "artifactName": "Tab Scroller.${ext}",
       "asar": true,
       "target": [
-        "portable",
-        "zip"
+        "nsis",
+        "portable"
       ]
     },
     "linux": {
@@ -136,7 +143,6 @@
     "branches": [
       "main"
     ],
-    "tagFormat": "v${version}",
     "plugins": [
       "@semantic-release/git",
       [

@@ -25,22 +25,11 @@ function createWindow() {
       preload: join(__dirname, 'preload.js')
     }
   });
-  console.log('dirname', __dirname);
-  
-  // create new file containing the dirname
-  const asarPath = join(__dirname, "..", "..");
-  console.log('asarPath', asarPath);
-  
-    fs.writeFile(join('F:\\Programming\\tab-scroller', 'test.json'), JSON.stringify(fs.readdirSync(asarPath)), (err) => {
-      if (err) {
-        console.error(err);
-      }
-    });
   
   const port = process.env.PORT || 3000;
   const mainUrl = isDev
     ? `http://localhost:${port}`
-    : join(__dirname, 'src/out/index.html');
+    : join(__dirname, '..','..', 'src/out/index.html');
   // and load the index.html of the app.
   if (isDev) {
     window?.loadURL(mainUrl);
@@ -94,6 +83,7 @@ function createWindow() {
 
   window.once('ready-to-show', () => {
     window.show();
+    isDev && window.webContents.openDevTools();
   });
 }
 
