@@ -1,14 +1,15 @@
 
-## Features
-- Open files
-- Autoscroll
-- Zoom in and out
- - Supported file types: PDF, text, and image files
 # Tab Scroller
 
 A simple application that provides useful features for opening sheet music and guitar tabulature files.
 Provides auto scroll and resizing features, more to come. 
 
+## Features
+- Open files
+- Autoscroll
+- Zoom in and out
+ - Supported file types: PDF, text, and image files
+ - 
 ## Description
 
 This application runs on your loal machine and allows you to open PDF files and view them in a more convenient way. It provides features such as auto scrolling, zooming in and out, and changing the page details. 
