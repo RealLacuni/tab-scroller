@@ -1,5 +1,5 @@
 {
-  "name": "tab-scroller",
+  "name": "Tab Scroller",
   "ProductName": "Tab Scroller",
   "version": "0.0.1",
   "license": "GPL-3.0-only",
@@ -143,6 +143,7 @@
     "branches": [
       "main"
     ],
+    "tagFormat": "v${version}",
     "plugins": [
       "@semantic-release/git",
       [
