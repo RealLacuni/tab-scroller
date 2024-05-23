@@ -25,6 +25,23 @@ const TabList = () => {
     }
   };
 
+  const closeTab = (e: React.MouseEvent<SVGSVGElement>, idx: number) => {
+      e.stopPropagation();
+      const newTabs = [...tabs];
+      newTabs.splice(idx, 1);
+      updateOpenFiles(newTabs);
+      
+      if (idx === openIndex) {
+        setIsPlaying(false);
+        if (newTabs.length > 0) {
+          updateCurrentFile(newTabs[idx === 0 ? 0 : idx - 1]);
+        } else {
+          updateCurrentFile(null);
+          console.log('No tabs left, set current file to null');
+        }
+      }
+    }
+
   return (
     <div className="flex flex-row gap-[0.075rem] overflow-x-clip">
       {tabs.map((file, idx) => (
@@ -41,20 +58,7 @@ const TabList = () => {
 
           <XMarkIcon
             className="w-3.5 h-3.5 absolute top-0 right-0 text-slate-900 cursor-pointer hover:text-white"
-            onClick={(e) => {
-              e.stopPropagation();
-              const newTabs = [...tabs];
-              newTabs.splice(idx, 1);
-              updateOpenFiles(newTabs);
-              if (idx === openIndex) {
-                setIsPlaying(false);
-                if (newTabs.length > 0) {
-                  updateCurrentFile(newTabs[idx === 0 ? 0 : idx - 1]);
-                } else {
-                  updateCurrentFile(null);
-                }
-              }
-            }}
+            onClick={(e) => closeTab(e, idx)}
           />
         </div>
       ))}
