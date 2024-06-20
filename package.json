@@ -1,6 +1,5 @@
 {
-  "name": "Tab Scroller",
-  "ProductName": "Tab Scroller",
+  "name": "tab-scroller",
   "version": "0.0.1",
   "license": "GPL-3.0-only",
   "private": true,
@@ -82,6 +81,7 @@
   },
   "build": {
     "appId": "com.reallacuni.tab-scroller",
+    "productName": "Tab Scroller",
     "files": [
       "main/**/*",
       "node_modules/**/*",
@@ -111,7 +111,8 @@
       "createStartMenuShortcut": true,
       "oneClick": false,
       "artifactName": "Tab Scroller-setup.${ext}",
-      "uninstallDisplayName": "Tab Scroller"
+      "uninstallDisplayName": "Tab Scroller",
+      "shortcutName": "Tab Scroller"
     },
     "portable": {
       "artifactName": "Tab Scroller-portable.${ext}"
@@ -119,6 +120,7 @@
     "win": {
       "icon": "assets/icon.ico",
       "asar": true,
+      "artifactName": "Tab Scroller.${ext}",
       "target": [
         "nsis",
         "portable"
