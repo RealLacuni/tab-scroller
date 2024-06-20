@@ -1,19 +1,25 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { FilesContext } from '../FilesContext';
 import { XMarkIcon } from '@heroicons/react/24/outline';
 import { AutoScrollContext } from '../AutoscrollContext';
+
 const TabList = () => {
   const {openFiles, currentFile, updateCurrentFile, updateOpenFiles} = useContext(FilesContext);
   const {setIsPlaying} = useContext(AutoScrollContext);
-  const tabs = openFiles;
-  const [openIndex, setOpenIndex] = React.useState<number>(currentFile ? tabs.indexOf(currentFile as File) : 0);
+  const [openIndex, setOpenIndex] = React.useState<number>(currentFile ? openFiles.indexOf(currentFile as File) : 0);
 
-  if (tabs.length === 0) {
+  useEffect(() => {
+    if (currentFile) {
+      setOpenIndex(openFiles.indexOf(currentFile as File));
+    }
+  }, [currentFile]);
+
+  if (openFiles.length === 0) {
     return <></>
   }
 
   const setActiveTab = (idx: number) => {
-    updateCurrentFile(tabs[idx]);
+    updateCurrentFile(openFiles[idx]);
     setOpenIndex(idx);
   };
 
@@ -27,24 +33,24 @@ const TabList = () => {
 
   const closeTab = (e: React.MouseEvent<SVGSVGElement>, idx: number) => {
       e.stopPropagation();
-      const newTabs = [...tabs];
-      newTabs.splice(idx, 1);
-      updateOpenFiles(newTabs);
+      const newOpenFiles = [...openFiles];
+      newOpenFiles.splice(idx, 1);
+      updateOpenFiles(newOpenFiles);
       
       if (idx === openIndex) {
         setIsPlaying(false);
-        if (newTabs.length > 0) {
-          updateCurrentFile(newTabs[idx === 0 ? 0 : idx - 1]);
+        if (newOpenFiles.length > 0) {
+          updateCurrentFile(newOpenFiles[idx === 0 ? 0 : idx - 1]);
         } else {
           updateCurrentFile(null);
-          console.log('No tabs left, set current file to null');
+          console.log('No openFiles left, set current file to null');
         }
       }
     }
 
   return (
     <div className="flex flex-row gap-[0.075rem] overflow-x-clip">
-      {tabs.map((file, idx) => (
+      {openFiles.map((file, idx) => (
         <div
           key={idx}
           className={`relative px-2.5 py-1 flex items-center cursor-pointer rounded-tl-md rounded-tr-md text-xs whitespace-nowrap align-bottom border-slate-400 ${
