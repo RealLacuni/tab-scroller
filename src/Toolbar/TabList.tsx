@@ -4,10 +4,10 @@ import { XMarkIcon } from '@heroicons/react/24/outline';
 import { AutoScrollContext } from '../AutoscrollContext';
 
 const TabList = () => {
-  const {openFiles, currentFile, updateCurrentFile, updateOpenFiles} = useContext(FilesContext);
-  const {setIsPlaying} = useContext(AutoScrollContext);
+  const { openFiles, currentFile, updateCurrentFile, updateOpenFiles } = useContext(FilesContext);
+  const { setIsPlaying } = useContext(AutoScrollContext);
   const [openIndex, setOpenIndex] = React.useState<number>(currentFile ? openFiles.indexOf(currentFile as File) : 0);
-
+ 
   useEffect(() => {
     if (currentFile) {
       setOpenIndex(openFiles.indexOf(currentFile as File));
@@ -15,7 +15,7 @@ const TabList = () => {
   }, [currentFile]);
 
   if (openFiles.length === 0) {
-    return <></>
+    return <></>;
   }
 
   const setActiveTab = (idx: number) => {
@@ -32,21 +32,25 @@ const TabList = () => {
   };
 
   const closeTab = (e: React.MouseEvent<SVGSVGElement>, idx: number) => {
-      e.stopPropagation();
-      const newOpenFiles = [...openFiles];
-      newOpenFiles.splice(idx, 1);
-      updateOpenFiles(newOpenFiles);
-      
-      if (idx === openIndex) {
-        setIsPlaying(false);
-        if (newOpenFiles.length > 0) {
-          updateCurrentFile(newOpenFiles[idx === 0 ? 0 : idx - 1]);
-        } else {
-          updateCurrentFile(null);
-          console.log('No openFiles left, set current file to null');
-        }
+    e.stopPropagation();
+    const newOpenFiles = [...openFiles];
+    newOpenFiles.splice(idx, 1);
+    updateOpenFiles(newOpenFiles);
+
+    if (idx === openIndex) {
+      setIsPlaying(false);
+      if (newOpenFiles.length === 0) {
+        updateCurrentFile(null);
+        console.log('No openFiles left, set current file to null');
+      } else {
+        updateCurrentFile(newOpenFiles[idx === 0 ? 0 : idx - 1]);
+      }
+    } else {
+      if (idx < openIndex) {
+        setOpenIndex(openIndex - 1);
       }
     }
+  };
 
   return (
     <div className="flex flex-row gap-[0.075rem] overflow-x-clip">

@@ -19,7 +19,6 @@ type PDFWindowProps = {
 const PDFWindow = (props: PDFWindowProps) => {
   const [numPages, setNumPages] = React.useState(0);
   const file = useContext(FilesContext).currentFile;
-  console.log('render! current file is, ', file && file.name);
   
   const { containerRef, width, scale, doublePage } = props;
   
