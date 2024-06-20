@@ -7,7 +7,7 @@ const TabList = () => {
   const { openFiles, currentFile, updateCurrentFile, updateOpenFiles } = useContext(FilesContext);
   const { setIsPlaying } = useContext(AutoScrollContext);
   const [openIndex, setOpenIndex] = React.useState<number>(currentFile ? openFiles.indexOf(currentFile as File) : 0);
- 
+
   useEffect(() => {
     if (currentFile) {
       setOpenIndex(openFiles.indexOf(currentFile as File));
@@ -33,31 +33,39 @@ const TabList = () => {
 
   const closeTab = (e: React.MouseEvent<SVGSVGElement>, idx: number) => {
     e.stopPropagation();
-    const newOpenFiles = [...openFiles];
-    newOpenFiles.splice(idx, 1);
-    updateOpenFiles(newOpenFiles);
+    const tabElement = document.getElementById(`tab-${idx}`);
+    if (tabElement) {
+      tabElement.classList.add('tab-shrink');
+      setTimeout(() => {
+        const newOpenFiles = [...openFiles];
+        newOpenFiles.splice(idx, 1);
+        updateOpenFiles(newOpenFiles);
 
-    if (idx === openIndex) {
-      setIsPlaying(false);
-      if (newOpenFiles.length === 0) {
-        updateCurrentFile(null);
-        console.log('No openFiles left, set current file to null');
-      } else {
-        updateCurrentFile(newOpenFiles[idx === 0 ? 0 : idx - 1]);
-      }
-    } else {
-      if (idx < openIndex) {
-        setOpenIndex(openIndex - 1);
-      }
+        if (idx === openIndex) {
+          setIsPlaying(false);
+
+          if (newOpenFiles.length === 0) {
+            updateCurrentFile(null);
+            console.log('No openFiles left, set current file to null');
+          } else {
+            updateCurrentFile(newOpenFiles[idx === 0 ? 0 : idx - 1]);
+          }
+        } else {
+          if (idx < openIndex) {
+            setOpenIndex(openIndex - 1);
+          }
+        }
+      }, 100);
     }
   };
 
   return (
-    <div className="flex flex-row gap-[0.075rem] overflow-x-clip">
+    <div className="flex flex-row gap-[0.075rem] overflow-x-clip tab-container-animation ">
       {openFiles.map((file, idx) => (
         <div
+          id={`tab-${idx}`}
           key={idx}
-          className={`relative px-2.5 py-1 flex items-center cursor-pointer rounded-tl-md rounded-tr-md text-xs whitespace-nowrap align-bottom border-slate-400 ${
+          className={`tab-grow relative px-2.5 py-1 flex items-center cursor-pointer rounded-tl-md rounded-tr-md text-xs whitespace-nowrap align-bottom border-slate-400 ${
             idx === openIndex
               ? ' bg-slate-400 text-slate-900 -mt-0.5 transition border'
               : ' bg-slate-300 text-slate-700 border hover:bg-slate-200 hover:text-slate-900 transition'

@@ -3,6 +3,36 @@
 @tailwind components;
 @tailwind utilities;
 
+@keyframes grow-width {
+  from {
+    width: 0;
+  }
+  to {
+    width: 100%;
+  }
+}
+
+.tab-grow {
+  animation: grow-width 0.05s ease-out;
+}
+
+@keyframes shrink-width {
+  from {
+    width: 100%;
+  }
+  to {
+    width: 0;
+  }
+}
+
+.tab-shrink {
+  animation: shrink-width 0.1s ease-out;
+}
+
+.tab-container-animation {
+  display: flex;
+  transition: width 0.5s ease-in-out, margin 0.5s ease-in-out;
+}
 
 /* For AppBar */
 .draggable {
