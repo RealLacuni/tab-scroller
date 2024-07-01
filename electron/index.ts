@@ -25,18 +25,18 @@ function createWindow() {
       preload: join(__dirname, 'preload.js')
     }
   });
-  
+
   const port = process.env.PORT || 3000;
   const mainUrl = isDev
     ? `http://localhost:${port}`
-    : join(__dirname, '..','..', 'src/out/index.html');
+    : join(__dirname, '..', '..', 'src/out/index.html');
   // and load the index.html of the app.
   if (isDev) {
     window?.loadURL(mainUrl);
   } else {
     window?.loadFile(mainUrl);
   }
-
+  
   ipcMain.on('add-file', (_, file: string) => {
     if (file === null) {
       return;
@@ -46,6 +46,9 @@ function createWindow() {
   });
 
   // For AppBar
+  ipcMain.removeAllListeners('close');
+  ipcMain.removeAllListeners('minimize');
+  ipcMain.removeAllListeners('maximize');
   ipcMain.on('minimize', () => {
     // eslint-disable-next-line no-unused-expressions
     window.isMinimized() ? window.restore() : window.minimize();
@@ -56,8 +59,11 @@ function createWindow() {
     window.isMaximized() ? window.restore() : window.maximize();
   });
 
-  ipcMain.on('close', () => {
+  ipcMain.on('close', (e) => {
+    e.preventDefault();
     window.close();
+    
+    ipcMain.removeHandler('read-image-file')
   });
 
   ipcMain.on('getSettings', (event) => {
@@ -72,14 +78,15 @@ function createWindow() {
     console.log(message);
   });
 
-  ipcMain.handle('read-image-file', async (_event, filePath) => {
-    try {
-      return fs.readFileSync(filePath, { encoding: 'base64' })
-    } catch (err) {
-      console.error(err);
-      return null;
-    }
-  });
+
+    ipcMain.handle('read-image-file', async (_event, filePath) => {
+      try {
+        return fs.readFileSync(filePath, { encoding: 'base64' })
+      } catch (err) {
+        console.error(err);
+        return null;
+      }
+    });
 
   window.once('ready-to-show', () => {
     window.show();
