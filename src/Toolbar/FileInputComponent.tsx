@@ -34,7 +34,7 @@ const FileInputComponent = () => {
         id="file-input"
         aria-label="file-input"
         type="file"
-        accept=".text/plain, application/pdf, images/*, .pdf, .jpeg, .png, .jpg"
+        accept="application/pdf, images/*, .pdf, .jpeg, .png, .jpg, .txt, .text/plain"
         className="w-48 h-8 bg-transparent hidden"
         ref={fileInputRef}
         onChange={(e) => {
