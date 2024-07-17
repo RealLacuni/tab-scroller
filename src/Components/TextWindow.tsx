@@ -30,14 +30,14 @@ const TextWindow = (props: TextWindowProps) => {
 
   return (
     <div className={`flex flex-col flex-1 overflow-y-auto items-center bg-slate-400 min-w-full`} id="window" ref={containerRef}>
-      <div className={` grid bg-white px-2 ${doublePage ? 'grid-cols-2 gap-4' : 'grid-cols-1'}`} ref={containerRef}>
+      <div className={` grid bg-white px-2 ${doublePage ? 'grid-cols-2 gap-4' : 'grid-cols-1'}`}>
         {doublePage ? (
           <>
-            <div className="break-words whitespace-pre-wrap">{content.slice(0, content.length / 2)}</div>
-            <div className="break-words whitespace-pre-wrap">{content.slice(content.length / 2)}</div>
+            <pre className="break-words whitespace-pre-wrap">{content.slice(0, content.length / 2)}</pre>
+            <pre className="break-words whitespace-pre-wrap">{content.slice(content.length / 2)}</pre>
           </>
         ) : (
-          <div className="break-words whitespace-pre-wrap">{content}</div>
+          <pre className="break-words whitespace-pre-wrap">{content}</pre>
         )}
       </div>
     </div>

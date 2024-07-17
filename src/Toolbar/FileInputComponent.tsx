@@ -1,16 +1,28 @@
-import React, { useContext } from 'react';
+import React, { useContext, useRef } from 'react';
 import { FolderOpenIcon } from '@heroicons/react/24/outline';
 import { FilesContext } from '../FilesContext';
 
 const FileInputComponent = () => {
   const files = useContext(FilesContext).openFiles;
-  const currentFile = useContext(FilesContext).currentFile;
   const updateCurrentFile = useContext(FilesContext).updateCurrentFile;
   const updateOpenFiles = useContext(FilesContext).updateOpenFiles;
-
+  const fileInputRef = useRef<HTMLInputElement>(null);
+  
   const handleClick = () => {
     document.getElementById('file-input')?.click();
   };
+
+  const handleFileSelection = (selectedFile: File | undefined) => {
+    if (selectedFile) {
+      const newFiles = [...files, selectedFile]
+      updateOpenFiles(newFiles);
+      updateCurrentFile(selectedFile);
+
+      // Reset the file input value to allow the same file to be selected again
+      if (fileInputRef.current) fileInputRef.current.value = '';
+    }
+  };
+  
   return (
     <div>
       <FolderOpenIcon
@@ -22,15 +34,12 @@ const FileInputComponent = () => {
         id="file-input"
         aria-label="file-input"
         type="file"
-        accept=".text/plain, application/pdf, images/*, .pdf, .jpeg, .png, .jpg"
+        accept="application/pdf, images/*, .pdf, .jpeg, .png, .jpg, .txt, .text/plain"
         className="w-48 h-8 bg-transparent hidden"
+        ref={fileInputRef}
         onChange={(e) => {
           const selectedFile = e.target.files?.[0];
-          if (selectedFile) {
-            if (!currentFile) updateCurrentFile(selectedFile);
-            const newFiles = [...files, selectedFile];
-            updateOpenFiles(newFiles);
-          }
+          handleFileSelection(selectedFile);
         }}
       />
     </div>

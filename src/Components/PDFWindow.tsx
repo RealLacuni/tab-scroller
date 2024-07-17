@@ -19,6 +19,7 @@ type PDFWindowProps = {
 const PDFWindow = (props: PDFWindowProps) => {
   const [numPages, setNumPages] = React.useState(0);
   const file = useContext(FilesContext).currentFile;
+  
   const { containerRef, width, scale, doublePage } = props;
   
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
