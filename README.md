@@ -8,10 +8,10 @@ Provides auto scroll and resizing features, more to come.
 - Open files
 - Autoscroll
 - Zoom in and out
- - Supported file types: PDF, text, and image files
+- Supported file types: PDF, text, and image files
 ## Description
 
-This application runs on your loal machine and allows you to open PDF files and view them in a more convenient way. It provides features such as auto scrolling, zooming in and out, and changing the page details. 
+This application runs on your local machine and allows you to open PDF files and view them in a more convenient way. It provides features such as auto scrolling, zooming in and out, and changing the page details. 
 
 ## Getting Started
 
@@ -28,11 +28,7 @@ As you open more files, the toolbar may get crowded and cut off. To close a file
 
 * To download the source code for running in development mode, clone the repository.
 
-### Executing program
-
-* Double click the executable file to run the program. 
-
-* To run the project cloned from the repository: With node installed, run `npm run dev` in the project directory.
+* To run the project cloned from the repository in development: With node installed, run `npm run dev` in the project directory.
 
 ## Help
 
