@@ -9,7 +9,6 @@ Provides auto scroll and resizing features, more to come.
 - Autoscroll
 - Zoom in and out
  - Supported file types: PDF, text, and image files
- - 
 ## Description
 
 This application runs on your loal machine and allows you to open PDF files and view them in a more convenient way. It provides features such as auto scrolling, zooming in and out, and changing the page details. 
